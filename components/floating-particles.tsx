@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { motion } from "framer-motion"
 
 type Props = {
@@ -9,11 +9,10 @@ type Props = {
   variant?: "petal" | "crystal"
 }
 
-export function FloatingParticles({
-  count = 14,
-  color = "var(--rose)",
-  variant = "petal",
-}: Props) {
+export function FloatingParticles({ count = 14, color = "var(--rose)", variant = "petal" }: Props) {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+
   const particles = useMemo(
     () =>
       Array.from({ length: count }).map((_, i) => ({
@@ -28,6 +27,8 @@ export function FloatingParticles({
       })),
     [count, variant],
   )
+
+  if (!mounted) return null
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
