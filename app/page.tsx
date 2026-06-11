@@ -6,6 +6,7 @@ import RitualSteps from '@/components/sections/RitualSteps';
 import Reviews from '@/components/sections/Reviews';
 import ShopSection from '@/components/sections/ShopSection';
 import Footer from '@/components/experience/Footer';
+import CinematicRitual from '@/components/sections/CinematicRitual';
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <Hero />
       <FeaturedProducts />
       <Benefits />
+      <CinematicRitual />
       <IngredientStory />
       <RitualSteps />
       <Reviews />
