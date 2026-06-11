@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ivory: #f7f3ec;
+  --ivory-deep: #efe8db;
+  --paper: #fdfbf7;
+  --ink: #211a14;
+  --gold: #b08538;
+}
+
+html {
+  background: var(--ivory);
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  background: var(--ivory);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Custom cursor active state */
+body.cursor-active,
+body.cursor-active a,
+body.cursor-active button,
+body.cursor-active [data-cursor] {
+  cursor: none !important;
+}
+
+::selection {
+  background: rgba(176, 133, 56, 0.22);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ivory);
+}
+::-webkit-scrollbar-thumb {
+  background: #d8cdbb;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c4b699;
+}
+
+/* Whisper of film grain — texture without noise */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Light glass for navigation + drawers */
+.glass-nav {
+  background: rgba(247, 243, 236, 0.78);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border-bottom: 1px solid rgba(33, 26, 20, 0.06);
+}
+
+.glass-panel {
+  background: rgba(253, 251, 247, 0.9);
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  border: 1px solid rgba(33, 26, 20, 0.07);
+}
+
+/* Masked line reveals */
+.mask-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.mask-line > span {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* Marquee */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: marquee 30s linear infinite;
+}
+
+img {
+  user-select: none;
+  -webkit-user-drag: none;
+}

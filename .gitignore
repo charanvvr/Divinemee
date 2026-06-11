@@ -21,3 +21,8 @@ mockups/
 # Build
 dist/
 .cache/
+.next/
+next-env.d.ts
+
+# Raw source photography (curated copies live in public/images)
+assets/raw/
