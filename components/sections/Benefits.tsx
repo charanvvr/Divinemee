@@ -1,5 +1,6 @@
 'use client';
 
+import { useRef, type MouseEvent } from 'react';
 import ImageReveal from '@/components/media/ImageReveal';
 
 const BENEFITS = [
@@ -48,6 +49,16 @@ const BENEFITS = [
 ];
 
 export default function Benefits() {
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  function moveSpotlight(index: number, event: MouseEvent<HTMLDivElement>) {
+    const card = cardRefs.current[index];
+    if (!card) return;
+    const bounds = card.getBoundingClientRect();
+    card.style.setProperty('--spot-x', `${event.clientX - bounds.left}px`);
+    card.style.setProperty('--spot-y', `${event.clientY - bounds.top}px`);
+  }
+
   return (
     <section className="bg-ivory py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
@@ -66,16 +77,22 @@ export default function Benefits() {
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {BENEFITS.map((b, i) => (
             <ImageReveal key={b.title} delay={(i % 3) * 0.1}>
-              <div className="group h-full rounded-[1.6rem] border border-ink/[0.06] bg-paper p-7 transition-all duration-500 ease-silk hover:-translate-y-1 hover:shadow-card">
+              <div
+                ref={(element) => { cardRefs.current[i] = element; }}
+                onMouseMove={(event) => moveSpotlight(i, event)}
+                className="premium-spotlight group relative h-full overflow-hidden rounded-[1.6rem] border border-ink/[0.06] bg-paper p-7 transition-all duration-500 ease-silk hover:-translate-y-1 hover:shadow-card"
+                style={{ '--spot-color': i % 2 === 0 ? 'rgba(201,124,146,0.18)' : 'rgba(138,114,192,0.16)' } as React.CSSProperties}
+              >
+                <span className="premium-spotlight-glow" aria-hidden="true" />
                 <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gold-soft text-gold transition-transform duration-500 ease-silk group-hover:scale-110">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                     {b.icon}
                   </svg>
                 </span>
-                <h3 className="mt-5 font-display text-xl font-light text-ink">
+                <h3 className="relative mt-5 font-display text-xl font-light text-ink">
                   {b.title}
                 </h3>
-                <p className="mt-2 text-[14px] font-light leading-relaxed text-ink-soft">
+                <p className="relative mt-2 text-[14px] font-light leading-relaxed text-ink-soft">
                   {b.text}
                 </p>
               </div>

@@ -108,6 +108,66 @@ body.cursor-active [data-cursor] {
   animation: marquee 30s linear infinite;
 }
 
+.premium-spotlight {
+  --spot-x: 50%;
+  --spot-y: 50%;
+  --spot-color: rgba(176, 133, 56, 0.16);
+}
+
+.premium-spotlight-glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    240px circle at var(--spot-x) var(--spot-y),
+    var(--spot-color),
+    transparent 72%
+  );
+  transition: opacity 400ms ease;
+}
+
+.premium-spotlight:hover .premium-spotlight-glow {
+  opacity: 1;
+}
+
+@keyframes review-marquee {
+  to {
+    transform: translateX(calc(-50% - 0.625rem));
+  }
+}
+
+@keyframes review-marquee-reverse {
+  from {
+    transform: translateX(calc(-50% - 0.625rem));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.reviews-mask {
+  padding-inline: max(1.25rem, calc((100vw - 80rem) / 2));
+  mask-image: linear-gradient(to right, transparent, black 7%, black 93%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 7%, black 93%, transparent);
+}
+
+.review-marquee {
+  animation: review-marquee 48s linear infinite;
+}
+
+.review-marquee-reverse {
+  animation: review-marquee-reverse 54s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .review-marquee,
+  .review-marquee-reverse,
+  .marquee-track {
+    animation-play-state: paused;
+  }
+}
+
 img {
   user-select: none;
   -webkit-user-drag: none;

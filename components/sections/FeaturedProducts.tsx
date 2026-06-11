@@ -1,24 +1,35 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { PRODUCT_LIST, useCart } from '@/lib/cart';
+import { AnimatePresence, motion } from 'framer-motion';
+import { PRODUCTS, type ProductId, useCart } from '@/lib/cart';
 import ImageReveal from '@/components/media/ImageReveal';
 import { flyToBag } from '@/lib/flyToBag';
 
+const PRODUCT_IDS = Object.keys(PRODUCTS) as ProductId[];
+
 export default function FeaturedProducts() {
   const { add, open } = useCart();
-  const btnRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const [active, setActive] = useState<ProductId>('rose-magic');
+  const addRef = useRef<HTMLButtonElement>(null);
+  const product = PRODUCTS[active];
+
+  function addActiveProduct() {
+    add(active);
+    flyToBag(addRef.current, product.accent);
+    setTimeout(open, 900);
+  }
 
   return (
-    <section id="products" className="bg-paper py-24 md:py-32">
+    <section id="products" className="overflow-hidden bg-paper py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <ImageReveal>
           <p className="text-[11px] font-semibold tracking-[0.34em] text-gold">
             THE COLLECTION
           </p>
-          <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
+          <div className="mt-4 flex flex-wrap items-end justify-between gap-5">
             <h2
               className="font-display font-light leading-tight text-ink"
               style={{ fontSize: 'clamp(2rem, 4vw, 3.4rem)' }}
@@ -26,117 +37,127 @@ export default function FeaturedProducts() {
               Two rituals. <em className="italic text-gold">One promise.</em>
             </h2>
             <p className="max-w-sm text-[14px] font-light leading-relaxed text-ink-faint">
-              Every jar is hand-blended with Epsom salt, pink Himalayan salt
-              and pure essential oils.
+              Move between rose warmth and lavender stillness. Every detail
+              responds to the ritual you choose.
             </p>
           </div>
         </ImageReveal>
 
-        <div className="mt-14 grid gap-8 md:grid-cols-2">
-          {PRODUCT_LIST.map((p, idx) => (
-            <ImageReveal key={p.id} delay={idx * 0.12}>
-              <article className="group relative overflow-hidden rounded-[2rem] border border-ink/[0.06] bg-ivory transition-shadow duration-700 ease-silk hover:shadow-lift">
-                {/* image stage */}
-                <Link
-                  href={`/products/${p.id}`}
-                  data-cursor="explore"
-                  className="relative block h-[380px] overflow-hidden md:h-[440px]"
-                  aria-label={`View ${p.name}`}
+        <div
+          className="relative mt-14 min-h-[690px] overflow-hidden rounded-[2.6rem] border border-ink/[0.06] md:min-h-[650px]"
+          style={{
+            background: `radial-gradient(circle at 72% 42%, ${product.accent}35, transparent 34%), linear-gradient(135deg, ${product.accentSoft}, #fdfbf7 68%)`,
+          }}
+        >
+          <motion.div
+            className="absolute -right-24 -top-28 h-[34rem] w-[34rem] rounded-full border border-white/50"
+            animate={{ rotate: active === 'rose-magic' ? 0 : 45, scale: active === 'rose-magic' ? 1 : 1.12 }}
+            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          />
+          <motion.div
+            className="absolute right-20 top-16 h-72 w-72 rounded-full border border-white/40"
+            animate={{ rotate: active === 'rose-magic' ? 20 : -30, x: active === 'rose-magic' ? 0 : 30 }}
+            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          />
+
+          <div className="relative z-10 grid min-h-[690px] items-center gap-8 p-6 md:min-h-[650px] md:grid-cols-[0.9fr_1.1fr] md:p-12 lg:p-16">
+            <div className="order-2 md:order-1">
+              <div className="inline-flex rounded-full border border-ink/10 bg-paper/55 p-1.5 backdrop-blur-xl">
+                {PRODUCT_IDS.map((id) => {
+                  const item = PRODUCTS[id];
+                  return (
+                    <button
+                      key={id}
+                      onClick={() => setActive(id)}
+                      className={`relative rounded-full px-5 py-3 text-[10px] font-semibold tracking-[0.18em] transition-colors ${
+                        active === id ? 'text-ivory' : 'text-ink-soft'
+                      }`}
+                    >
+                      {active === id && (
+                        <motion.span
+                          layoutId="product-pill"
+                          className="absolute inset-0 rounded-full bg-ink"
+                          transition={{ type: 'spring', stiffness: 280, damping: 28 }}
+                        />
+                      )}
+                      <span className="relative">{item.name.toUpperCase()}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={active}
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <div
-                    className="absolute inset-0 transition-transform duration-700 ease-silk group-hover:scale-[1.04]"
-                    style={{
-                      background: `linear-gradient(160deg, ${p.accentSoft} 0%, #fdfbf7 80%)`,
-                    }}
-                  />
-                  <Image
-                    src={p.gallery[0].src}
-                    alt={p.gallery[0].alt}
-                    fill
-                    sizes="(min-width: 768px) 50vw, 100vw"
-                    className="object-cover opacity-90 transition-all duration-700 ease-silk group-hover:scale-[1.05] group-hover:opacity-100"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
-                  {/* floating jar */}
-                  <div className="absolute bottom-0 left-1/2 h-[82%] -translate-x-1/2 drop-shadow-[0_24px_30px_rgba(40,25,15,0.35)] transition-transform duration-700 ease-silk group-hover:-translate-y-3">
-                    <Image
-                      src={p.cutout}
-                      alt={`${p.name} jar`}
-                      width={400}
-                      height={840}
-                      className="h-full w-auto"
-                    />
-                  </div>
-                  <span className="absolute left-5 top-5 rounded-full bg-paper/90 px-4 py-1.5 text-[10px] font-bold tracking-[0.18em] text-ink backdrop-blur">
-                    50% LAUNCH OFFER
-                  </span>
-                </Link>
+                  <p className="mt-10 text-[10px] font-semibold tracking-[0.34em]" style={{ color: product.accent }}>
+                    {product.tagline.toUpperCase()}
+                  </p>
+                  <h3 className="mt-3 font-display text-5xl font-light italic text-ink md:text-6xl">
+                    {product.name}
+                  </h3>
+                  <p className="mt-5 max-w-md text-[15px] font-light leading-relaxed text-ink-soft">
+                    {product.description}
+                  </p>
+                  <p className="mt-4 max-w-md text-[12px] tracking-wide text-ink-faint">
+                    {product.scent}
+                  </p>
 
-                {/* details */}
-                <div className="p-7 md:p-8">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="font-display text-3xl font-light italic text-ink">
-                        {p.name}
-                      </h3>
-                      <p className="mt-1 text-[13px] font-light text-ink-faint">
-                        {p.tagline} · {p.weight}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-display text-2xl text-ink">₹{p.price}</p>
-                      <p className="text-[13px] text-ink-faint line-through">₹{p.mrp}</p>
-                    </div>
-                  </div>
-
-                  <div className="mt-3 flex items-center gap-2 text-[13px]">
-                    <span className="text-gold">★★★★★</span>
-                    <span className="font-medium text-ink-soft">{p.rating}</span>
-                    <span className="text-ink-faint">({p.reviewCount} reviews)</span>
-                  </div>
-
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {p.benefits.slice(0, 3).map((b) => (
-                      <span
-                        key={b}
-                        className="rounded-full border border-ink/10 px-3 py-1 text-[11px] font-medium text-ink-soft"
-                      >
-                        {b}
+                  <div className="mt-7 flex flex-wrap gap-2">
+                    {product.benefits.map((benefit) => (
+                      <span key={benefit} className="rounded-full border border-ink/10 bg-paper/45 px-3.5 py-1.5 text-[11px] text-ink-soft backdrop-blur">
+                        {benefit}
                       </span>
                     ))}
                   </div>
 
-                  <div className="mt-6 flex items-center gap-3">
+                  <div className="mt-9 flex flex-wrap items-center gap-3">
                     <button
-                      ref={(el) => {
-                        btnRefs.current[p.id] = el;
-                      }}
-                      data-cursor="magnetic"
-                      onClick={() => {
-                        add(p.id);
-                        flyToBag(btnRefs.current[p.id], p.accent);
-                        setTimeout(open, 900);
-                      }}
-                      className="group/btn relative flex-1 overflow-hidden rounded-full bg-ink py-3.5 text-center text-[11px] font-semibold tracking-[0.18em] text-ivory transition-transform duration-500 ease-silk hover:scale-[1.02] active:scale-95"
+                      ref={addRef}
+                      onClick={addActiveProduct}
+                      className="rounded-full bg-ink px-8 py-4 text-[11px] font-semibold tracking-[0.2em] text-ivory transition-transform duration-500 ease-silk hover:scale-[1.03]"
                     >
-                      <span className="relative z-10">ADD TO CART</span>
-                      <span
-                        className="absolute inset-0 translate-y-full transition-transform duration-500 ease-silk group-hover/btn:translate-y-0"
-                        style={{ background: p.accent }}
-                      />
+                      ADD TO CART · ₹{product.price}
                     </button>
-                    <Link
-                      href={`/products/${p.id}`}
-                      data-cursor="magnetic"
-                      className="rounded-full border border-ink/15 px-6 py-3.5 text-[11px] font-semibold tracking-[0.18em] text-ink transition-colors duration-300 hover:border-ink/40"
-                    >
-                      DETAILS
+                    <Link href={`/products/${active}`} className="rounded-full border border-ink/15 bg-paper/30 px-7 py-4 text-[11px] font-semibold tracking-[0.18em] text-ink backdrop-blur transition-colors hover:bg-paper/70">
+                      EXPLORE RITUAL
                     </Link>
                   </div>
-                </div>
-              </article>
-            </ImageReveal>
-          ))}
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            <div className="relative order-1 flex h-[310px] items-center justify-center md:order-2 md:h-[560px]">
+              <AnimatePresence mode="popLayout">
+                <motion.div
+                  key={active}
+                  initial={{ opacity: 0, scale: 0.88, x: 60, rotate: 4 }}
+                  animate={{ opacity: 1, scale: 1, x: 0, rotate: 0 }}
+                  exit={{ opacity: 0, scale: 0.92, x: -50, rotate: -3 }}
+                  transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+                  className="absolute inset-0 flex items-center justify-center"
+                >
+                  <div className="absolute h-[68%] w-[68%] rounded-full bg-white/30 blur-2xl" />
+                  <Image
+                    src={product.cutout}
+                    alt={`${product.name} bath salt jar`}
+                    width={430}
+                    height={850}
+                    priority
+                    className="relative z-10 h-[94%] w-auto object-contain drop-shadow-[0_42px_35px_rgba(45,25,25,0.28)]"
+                  />
+                </motion.div>
+              </AnimatePresence>
+              <div className="absolute bottom-2 right-2 rounded-2xl border border-white/50 bg-paper/45 px-5 py-4 text-right backdrop-blur-xl md:bottom-8 md:right-4">
+                <p className="text-[9px] tracking-[0.24em] text-ink-faint">LAUNCH EDITION · {product.weight}</p>
+                <p className="mt-1 font-display text-3xl text-ink">₹{product.price}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
