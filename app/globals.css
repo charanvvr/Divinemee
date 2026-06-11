@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", serif;
+  --font-display: var(--font-playfair), "Playfair Display", serif;
+  --font-sans: var(--font-inter), "Inter", sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ivory: var(--ivory);
+  --color-blush: var(--blush);
+  --color-rose: var(--rose);
+  --color-rose-deep: var(--rose-deep);
+  --color-champagne: var(--champagne);
+  --color-gold: var(--gold);
+  --color-lavender: var(--lavender);
+  --color-purple-royal: var(--purple-royal);
+  --color-cream: var(--cream);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+
+  --radius: 1.25rem;
+}
+
+:root {
+  --background: #faf7f2;
+  --foreground: #2b2530;
+  --ivory: #f7f2ea;
+  --cream: #fbf8f3;
+  --blush: #f4dfe1;
+  --rose: #e8a9b4;
+  --rose-deep: #b5616f;
+  --champagne: #e7d3ad;
+  --gold: #b8923f;
+  --lavender: #d8cdec;
+  --purple-royal: #6b4fa0;
+  --muted: #8a8290;
+  --border: rgba(43, 37, 48, 0.08);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--background);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Hide default cursor on desktop where custom cursor is active */
+@media (hover: hover) and (pointer: fine) {
+  .custom-cursor-active * {
+    cursor: none !important;
+  }
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+.shimmer {
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+@keyframes drift {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-12px) rotate(6deg);
+  }
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+}
+
+.glass-dark {
+  background: rgba(43, 37, 48, 0.6);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--ivory);
+}
+
+/* Smooth scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ivory);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--champagne);
+  border-radius: 999px;
+}
