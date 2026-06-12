@@ -173,52 +173,23 @@ img {
   -webkit-user-drag: none;
 }
 
-.hero-orb {
-  position: absolute;
-  width: min(48rem, 64vw);
-  aspect-ratio: 1;
-  border-radius: 999px;
-  filter: blur(70px);
-  will-change: transform;
+@keyframes sound-wave {
+  0%,
+  100% {
+    height: 0.25rem;
+  }
+  50% {
+    height: 1rem;
+  }
 }
 
-.hero-orb-rose {
-  left: -18%;
-  top: 25%;
-  background: rgba(201, 124, 146, 0.16);
-  animation: hero-orbit-rose 16s ease-in-out infinite alternate;
-}
-
-.hero-orb-lavender {
-  right: -18%;
-  top: 8%;
-  background: rgba(138, 114, 192, 0.17);
-  animation: hero-orbit-lavender 18s ease-in-out infinite alternate;
-}
-
-.hero-scroll-line {
-  transform-origin: top;
-  animation: hero-scroll-line 2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-}
-
-@keyframes hero-orbit-rose {
-  to { transform: translate3d(22vw, -8vh, 0) scale(1.12); }
-}
-
-@keyframes hero-orbit-lavender {
-  to { transform: translate3d(-18vw, 16vh, 0) scale(0.88); }
-}
-
-@keyframes hero-scroll-line {
-  0% { transform: scaleY(0); transform-origin: top; }
-  45% { transform: scaleY(1); transform-origin: top; }
-  55% { transform: scaleY(1); transform-origin: bottom; }
-  100% { transform: scaleY(0); transform-origin: bottom; }
+.sound-wave-bar {
+  animation: sound-wave 800ms ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-orb,
-  .hero-scroll-line {
+  .sound-wave-bar {
     animation: none;
+    height: 0.5rem;
   }
 }

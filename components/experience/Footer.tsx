@@ -61,6 +61,18 @@ export default function Footer() {
       <div className="border-t border-ink/[0.06]">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-5 py-6 text-[11.5px] text-ink-faint md:flex-row md:px-8">
           <p>© {new Date().getFullYear()} Divine Mee. All rights reserved.</p>
+          <p>
+            Music:{' '}
+            <a
+              href="https://pixabay.com/music/world-relaxing-krishna-flute-music-deep-sleep-relaxing-music-292793/"
+              target="_blank"
+              rel="noreferrer"
+              className="underline decoration-ink/20 underline-offset-4 transition-colors hover:text-ink"
+            >
+              Relaxing Krishna Flute by AlaminHossain1989
+            </a>{' '}
+            · Pixabay Content License
+          </p>
           <p>Handcrafted with stillness in India 🇮🇳</p>
         </div>
       </div>

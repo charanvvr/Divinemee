@@ -7,7 +7,7 @@ import CustomCursor from '@/components/experience/CustomCursor';
 import LuxuryNavigation from '@/components/experience/LuxuryNavigation';
 import CartDrawer from '@/components/experience/CartDrawer';
 import { AuthProvider } from '@/lib/auth-context';
-import ScrollProgress from '@/components/experience/ScrollProgress';
+import AmbientSound from '@/components/experience/AmbientSound';
 
 const fraunces = Fraunces({
   subsets: ['latin'],
@@ -44,7 +44,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
       <body className="grain font-sans">
-        <ScrollProgress />
+        <AmbientSound />
         <AuthProvider>
           <CartProvider>
             <SmoothScroll>
