@@ -1,4 +1,4 @@
-export type ProductId = 'rose-magic' | 'lavender-bliss' | 'epsom-soak';
+export type ProductId = 'rose-magic' | 'lavender-bliss';
 
 export interface Product {
   id: ProductId;
@@ -54,13 +54,13 @@ export const PRODUCTS: Record<ProductId, Product> = {
       'Epsom and sea salt crystals scented with French lavender and scattered with real buds. The evening slows down, shoulders drop, and sleep comes easier.',
     price: 349,
     mrp: 499,
-    weight: '400 g',
-    cutout: '/images/cutouts/lavender-bliss.png',
+    weight: '500 g',
+    cutout: '/images/cutouts/lavender-pouch.png',
     gallery: [
-      { src: '/images/lifestyle-lavender-field.jpg', alt: 'Lavender Bliss jar standing in a lavender field' },
-      { src: '/images/jar-lavender-open.jpg', alt: 'Open Lavender Bliss jar with wooden scoop' },
+      { src: '/images/pouch-epsom-lavender.jpg', alt: 'Lavender Bliss Epsom salt pouch beside a bowl of crystals and lavender' },
+      { src: '/images/guide-epsom-how-to.jpg', alt: 'How to use Divine Mee Lavender Bliss bath salt in four steps' },
+      { src: '/images/guide-epsom-benefits.jpg', alt: 'The benefits of Divine Mee Lavender Bliss Epsom salt' },
       { src: '/images/macro-lavender-salt.jpg', alt: 'Macro of salt crystals with real lavender buds' },
-      { src: '/images/ritual-lavender-soak.jpg', alt: 'A lavender foot soak with Lavender Bliss' },
     ],
     accent: '#8a72c0',
     accentSoft: '#ece7f6',
@@ -68,33 +68,11 @@ export const PRODUCTS: Record<ProductId, Product> = {
     reviewCount: 186,
     benefits: ['Deep relaxation', 'Better sleep', 'Body detox', 'Calms the mind'],
     howTo:
-      'Pour 2–3 tablespoons into a warm bath or foot soak. Let the crystals dissolve fully, then soak for 15–20 minutes. Exhale.',
-  },
-  'epsom-soak': {
-    id: 'epsom-soak',
-    name: 'Epsom Salt Soak',
-    tagline: 'The everyday reset',
-    scent: 'Pure Epsom crystals · calming lavender buds · clean warm steam',
-    description:
-      'A generous 500 g pouch of pure Epsom salt scattered with lavender buds. The simplest ritual there is — warm water, twenty minutes, and tired muscles finally let go.',
-    price: 279,
-    mrp: 499,
-    weight: '500 g',
-    cutout: '/images/cutouts/epsom-soak.png',
-    gallery: [
-      { src: '/images/pouch-epsom-lavender.jpg', alt: 'Epsom Salt Soak pouch beside a bowl of crystals and lavender' },
-      { src: '/images/guide-epsom-how-to.jpg', alt: 'How to use Divine Mee Epsom bath salt in four steps' },
-      { src: '/images/guide-epsom-benefits.jpg', alt: 'The benefits of Divine Mee Epsom salt' },
-      { src: '/images/macro-lavender-salt.jpg', alt: 'Macro of Epsom crystals with real lavender buds' },
-    ],
-    accent: '#6f5fa8',
-    accentSoft: '#edeaf6',
-    rating: 4.8,
-    reviewCount: 58,
-    benefits: ['Soothes tired muscles', 'Relaxes body & mind', 'Better sleep', 'Nourishes skin'],
-    howTo:
       'Add 2 cups of Epsom salt to warm water. Soak your feet or body for 20 minutes, rinse with a normal shower, then apply moisturiser. Use 2–3 times a week for best results.',
   },
+  // TODO: third product 'epsom-pure' (plain Epsom salt, ₹279 / MRP 499) is ready
+  // to relist as soon as its pack photos arrive — every current asset shows the
+  // Lavender Bliss pack, which would mislead buyers on a plain-Epsom listing.
 };
 
 export const PRODUCT_LIST = Object.values(PRODUCTS);

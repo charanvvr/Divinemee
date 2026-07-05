@@ -34,11 +34,11 @@ export default function FeaturedProducts() {
               className="font-display font-light leading-tight text-ink"
               style={{ fontSize: 'clamp(2rem, 4vw, 3.4rem)' }}
             >
-              Three rituals. <em className="italic text-gold">One promise.</em>
+              Two rituals. <em className="italic text-gold">One promise.</em>
             </h2>
             <p className="max-w-sm text-[14px] font-light leading-relaxed text-ink-faint">
-              Move between rose warmth, lavender stillness and the pure Epsom
-              reset. Every detail responds to the ritual you choose.
+              Move between rose warmth and lavender stillness. Every detail
+              responds to the ritual you choose.
             </p>
           </div>
         </ImageReveal>
