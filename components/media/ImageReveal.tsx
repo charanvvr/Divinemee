@@ -19,14 +19,15 @@ export default function ImageReveal({
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // transform + opacity only — animating CSS filters forces full repaints
+      // of large sections and is the main source of scroll jank on mid-range devices
       gsap.fromTo(
         ref.current,
-        { opacity: 0, y, filter: 'blur(6px)' },
+        { opacity: 0, y },
         {
           opacity: 1,
           y: 0,
-          filter: 'blur(0px)',
-          duration: 1.3,
+          duration: 1.1,
           delay,
           ease: 'power3.out',
           scrollTrigger: { trigger: ref.current, start: 'top 85%' },

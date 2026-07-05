@@ -54,7 +54,7 @@ export default function ShopSection() {
             </h2>
 
             {/* variant selector */}
-            <div className="mt-8 flex gap-3">
+            <div className="mt-8 grid gap-3 sm:grid-cols-3">
               {(Object.keys(PRODUCTS) as ProductId[]).map((id) => {
                 const prod = PRODUCTS[id];
                 const isActive = active === id;
@@ -63,7 +63,7 @@ export default function ShopSection() {
                     key={id}
                     data-cursor="magnetic"
                     onClick={() => choose(id)}
-                    className={`flex flex-1 items-center gap-3 rounded-2xl border p-4 text-left transition-all duration-500 ease-silk ${
+                    className={`flex items-center gap-3 rounded-2xl border p-4 text-left transition-all duration-500 ease-silk ${
                       isActive
                         ? 'border-ink/20 bg-paper shadow-card'
                         : 'border-ink/[0.07] bg-transparent opacity-65 hover:opacity-100'
@@ -98,7 +98,7 @@ export default function ShopSection() {
                 className="mb-2 rounded-full px-3 py-1 text-[10px] font-bold tracking-wide"
                 style={{ background: p.accentSoft, color: p.accent }}
               >
-                SAVE 50%
+                SAVE {Math.round((1 - p.price / p.mrp) * 100)}%
               </span>
             </div>
 

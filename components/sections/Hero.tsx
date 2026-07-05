@@ -247,20 +247,26 @@ export default function Hero() {
             Pour. Dissolve. <em className="italic text-gold">Exhale.</em>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-[15px] font-light leading-relaxed text-ink-soft">
-            Two moods. One ritual. Real botanicals, mineral-rich salts and twenty quiet minutes that belong only to you.
+            Three moods. One ritual. Real botanicals, mineral-rich salts and twenty quiet minutes that belong only to you.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link
               href="/products/lavender-bliss"
               className="rounded-full border border-ink/15 bg-paper/80 px-8 py-4 text-[10px] font-semibold tracking-[0.18em] text-ink transition-colors hover:bg-lavender-soft"
             >
-              SHOP LAVENDER BLISS
+              LAVENDER BLISS
             </Link>
             <Link
               href="/products/rose-magic"
               className="rounded-full bg-ink px-8 py-4 text-[10px] font-semibold tracking-[0.18em] text-ivory transition-colors hover:bg-rose-deep"
             >
-              SHOP ROSE MAGIC
+              ROSE MAGIC
+            </Link>
+            <Link
+              href="/products/epsom-soak"
+              className="rounded-full border border-ink/15 bg-paper/80 px-8 py-4 text-[10px] font-semibold tracking-[0.18em] text-ink transition-colors hover:bg-lavender-soft"
+            >
+              EPSOM SOAK
             </Link>
           </div>
         </div>
@@ -333,7 +339,7 @@ export default function Hero() {
                 <div className="flex items-center justify-between gap-3">
                   <p className="text-[8px] font-semibold tracking-[0.28em] text-gold md:text-[9px]">SHOP THE RITUAL</p>
                   <span className="hidden rounded-full bg-gold-soft px-2.5 py-1 text-[8px] font-semibold tracking-[0.12em] text-ink-soft md:inline">
-                    400 G
+                    {product.weight.toUpperCase()}
                   </span>
                 </div>
                 <div className="mt-1.5 flex items-end justify-between gap-2 md:mt-3 md:block">
@@ -361,7 +367,7 @@ export default function Hero() {
                           : 'border-ink/10 bg-paper/70 text-ink-soft'
                       }`}
                     >
-                      {id === 'lavender-bliss' ? 'LAVENDER' : 'ROSE'}
+                      {PRODUCTS[id].name.split(' ')[0].toUpperCase()}
                     </button>
                   ))}
                 </div>
@@ -392,20 +398,26 @@ export default function Hero() {
           <div className="w-full max-w-lg rounded-[2rem] border border-white/55 bg-paper/80 p-6 text-center shadow-lift backdrop-blur-xl md:p-8">
             <p className="text-[9px] font-semibold tracking-[0.34em] text-gold">THE DIVINE MEE COLLECTION</p>
             <h2 className="mt-3 font-display text-3xl font-light text-ink md:text-4xl">
-              Two moods. <em className="italic text-gold">One ritual.</em>
+              Three moods. <em className="italic text-gold">One ritual.</em>
             </h2>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/products/lavender-bliss"
                 className="flex min-h-[48px] flex-1 items-center justify-center rounded-full border border-ink/15 bg-paper/70 px-5 text-[10px] font-semibold tracking-[0.16em] text-ink transition-colors hover:bg-lavender-soft"
               >
-                SHOP LAVENDER BLISS
+                LAVENDER BLISS
               </Link>
               <Link
                 href="/products/rose-magic"
                 className="flex min-h-[48px] flex-1 items-center justify-center rounded-full bg-ink px-5 text-[10px] font-semibold tracking-[0.16em] text-ivory transition-colors hover:bg-rose-deep"
               >
-                SHOP ROSE MAGIC
+                ROSE MAGIC
+              </Link>
+              <Link
+                href="/products/epsom-soak"
+                className="flex min-h-[48px] flex-1 items-center justify-center rounded-full border border-ink/15 bg-paper/70 px-5 text-[10px] font-semibold tracking-[0.16em] text-ink transition-colors hover:bg-lavender-soft"
+              >
+                EPSOM SOAK
               </Link>
             </div>
           </div>

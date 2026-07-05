@@ -4,7 +4,7 @@ export interface Review {
   rating: number;
   title: string;
   body: string;
-  product: 'Rose Magic' | 'Lavender Bliss';
+  product: 'Rose Magic' | 'Lavender Bliss' | 'Epsom Salt Soak';
 }
 
 export const REVIEWS: Review[] = [

@@ -59,7 +59,7 @@ export default function Reviews() {
               <span className="font-display text-4xl font-light text-ink">4.9</span>
               <span>
                 <span className="block text-gold">★★★★★</span>
-                <span className="text-[12px] text-ink-faint">328 verified reviews</span>
+                <span className="text-[12px] text-ink-faint">386 verified reviews</span>
               </span>
             </div>
           </div>

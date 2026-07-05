@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
   title: 'Divine Mee — A Daily Luxury Escape',
   description:
-    'Divine Mee luxury bath salts. Rose Magic & Lavender Bliss — handcrafted self-care rituals with Epsom salt, pink Himalayan salt and pure essential oils.',
+    'Divine Mee luxury bath salts. Rose Magic, Lavender Bliss & the pure Epsom Salt Soak — handcrafted self-care rituals with Epsom salt, pink Himalayan salt and pure essential oils.',
   openGraph: {
     title: 'Divine Mee — Self Care Ritual',
     description: 'Not a bath product. A daily luxury escape.',

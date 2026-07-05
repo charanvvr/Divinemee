@@ -4,7 +4,7 @@ import { PRODUCTS, type ProductId } from '@/lib/products';
 export const cartItemsSchema = z
   .array(
     z.object({
-      id: z.enum(['rose-magic', 'lavender-bliss']),
+      id: z.enum(['rose-magic', 'lavender-bliss', 'epsom-soak']),
       qty: z.number().int().min(1).max(20),
     })
   )

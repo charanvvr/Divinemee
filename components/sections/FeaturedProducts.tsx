@@ -34,11 +34,11 @@ export default function FeaturedProducts() {
               className="font-display font-light leading-tight text-ink"
               style={{ fontSize: 'clamp(2rem, 4vw, 3.4rem)' }}
             >
-              Two rituals. <em className="italic text-gold">One promise.</em>
+              Three rituals. <em className="italic text-gold">One promise.</em>
             </h2>
             <p className="max-w-sm text-[14px] font-light leading-relaxed text-ink-faint">
-              Move between rose warmth and lavender stillness. Every detail
-              responds to the ritual you choose.
+              Move between rose warmth, lavender stillness and the pure Epsom
+              reset. Every detail responds to the ritual you choose.
             </p>
           </div>
         </ImageReveal>
@@ -144,7 +144,7 @@ export default function FeaturedProducts() {
                   <div className="absolute h-[68%] w-[68%] rounded-full bg-white/30 blur-2xl" />
                   <Image
                     src={product.cutout}
-                    alt={`${product.name} bath salt jar`}
+                    alt={`Divine Mee ${product.name} bath salt`}
                     width={430}
                     height={850}
                     priority

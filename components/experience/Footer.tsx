@@ -35,6 +35,7 @@ export default function Footer() {
           <ul className="mt-4 space-y-2.5 text-[14px] font-light text-ink-soft">
             <li><Link href="/products/rose-magic" className="transition-colors hover:text-ink">Rose Magic</Link></li>
             <li><Link href="/products/lavender-bliss" className="transition-colors hover:text-ink">Lavender Bliss</Link></li>
+            <li><Link href="/products/epsom-soak" className="transition-colors hover:text-ink">Epsom Salt Soak</Link></li>
             <li><Link href="/#shop" className="transition-colors hover:text-ink">All Products</Link></li>
           </ul>
         </div>

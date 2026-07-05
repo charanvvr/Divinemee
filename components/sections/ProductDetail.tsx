@@ -154,7 +154,7 @@ export default function ProductDetail({ id }: { id: ProductId }) {
                 className="mb-2 rounded-full px-3 py-1 text-[10px] font-bold tracking-wide"
                 style={{ background: p.accentSoft, color: p.accent }}
               >
-                SAVE 50%
+                SAVE {Math.round((1 - p.price / p.mrp) * 100)}%
               </span>
             </div>
 

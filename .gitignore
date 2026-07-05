@@ -28,3 +28,4 @@ next-env.d.ts
 assets/raw/
 
 .vercel
+*.tsbuildinfo
