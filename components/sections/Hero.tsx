@@ -234,7 +234,7 @@ export default function Hero() {
       <section id="top" className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-ivory">
         <NextImage
           src="/images/jars-candlelight.jpg"
-          alt="Lavender Bliss and Rose Magic luxury bath salts by candlelight"
+          alt="Lavender and Rose Epsom Salt bath soaks by candlelight"
           fill
           priority
           className="object-cover opacity-90"
@@ -247,20 +247,20 @@ export default function Hero() {
             Pour. Dissolve. <em className="italic text-gold">Exhale.</em>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-[15px] font-light leading-relaxed text-ink-soft">
-            Two moods. One ritual. Real botanicals, mineral-rich salts and twenty quiet minutes that belong only to you.
+            Two moods. One ritual. Pure Epsom salt, real botanicals and twenty quiet minutes that belong only to you.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link
               href="/products/lavender-bliss"
               className="rounded-full border border-ink/15 bg-paper/80 px-8 py-4 text-[10px] font-semibold tracking-[0.18em] text-ink transition-colors hover:bg-lavender-soft"
             >
-              SHOP LAVENDER BLISS
+              LAVENDER EPSOM SALT
             </Link>
             <Link
               href="/products/rose-magic"
               className="rounded-full bg-ink px-8 py-4 text-[10px] font-semibold tracking-[0.18em] text-ivory transition-colors hover:bg-rose-deep"
             >
-              SHOP ROSE MAGIC
+              ROSE EPSOM SALT
             </Link>
           </div>
         </div>
@@ -275,7 +275,7 @@ export default function Hero() {
           ref={canvasRef}
           className="absolute inset-0 h-full w-full bg-ivory"
           role="img"
-          aria-label="A jar of Divine Mee Lavender Bliss bath salt pours its salts and becomes Rose Magic as you scroll"
+          aria-label="A jar of Divine Mee Lavender Epsom Salt pours its crystals and becomes Rose Epsom Salt as you scroll"
         />
 
         {/* arrival typography */}
@@ -399,13 +399,13 @@ export default function Hero() {
                 href="/products/lavender-bliss"
                 className="flex min-h-[48px] flex-1 items-center justify-center rounded-full border border-ink/15 bg-paper/70 px-5 text-[10px] font-semibold tracking-[0.16em] text-ink transition-colors hover:bg-lavender-soft"
               >
-                SHOP LAVENDER BLISS
+                LAVENDER EPSOM SALT
               </Link>
               <Link
                 href="/products/rose-magic"
                 className="flex min-h-[48px] flex-1 items-center justify-center rounded-full bg-ink px-5 text-[10px] font-semibold tracking-[0.16em] text-ivory transition-colors hover:bg-rose-deep"
               >
-                SHOP ROSE MAGIC
+                ROSE EPSOM SALT
               </Link>
             </div>
           </div>

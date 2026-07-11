@@ -75,7 +75,7 @@ export default function CheckoutPage() {
         amount: order.amount,
         currency: order.currency,
         name: 'Divine Mee',
-        description: 'Luxury bath salt ritual',
+        description: 'Epsom salt bath soak order',
         order_id: order.id,
         prefill: { name: customer.fullName, email: customer.email, contact: customer.phone },
         theme: { color: '#0b0712' },
@@ -155,7 +155,7 @@ export default function CheckoutPage() {
                         <span className="flex h-16 w-12 shrink-0 items-center justify-center rounded-xl" style={{ background: product.accentSoft }}>
                           <Image src={product.cutout} alt="" width={34} height={70} className="h-12 w-auto" />
                         </span>
-                        <span className="flex-1"><span className="block font-display text-[16px] italic text-ink">{product.name}</span><span className="text-[12px] text-ink-faint">Qty {item.qty}</span></span>
+                        <span className="flex-1"><span className="block font-display text-[16px] italic text-ink">{product.name}</span><span className="text-[12px] text-ink-faint">{product.weight} · ₹{product.price} × {item.qty}</span></span>
                         <span className="text-[14px] font-medium text-ink">₹{product.price * item.qty}</span>
                       </li>
                     );

@@ -98,9 +98,10 @@ export default function ProductTilt({
       >
         <Image
           src={p.cutout}
-          alt={`Divine Mee ${p.name} luxury bath salt`}
+          alt={`Divine Mee ${p.name} bath soak`}
           width={500}
           height={1000}
+          quality={90}
           priority
           className="h-full w-auto"
           style={{ filter: 'drop-shadow(0 18px 28px rgba(70,50,30,0.18))' }}

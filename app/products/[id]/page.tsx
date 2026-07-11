@@ -17,7 +17,7 @@ export async function generateMetadata({
   const product = PRODUCTS[id as ProductId];
   if (!product) return {};
   return {
-    title: `${product.name} — Divine Mee Luxury Bath Salt`,
+    title: `${product.name} (${product.weight}) — Divine Mee Bath Soak`,
     description: product.description,
   };
 }

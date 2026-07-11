@@ -11,15 +11,15 @@ const extendedReviews: Review[] = [
     rating: 5,
     title: 'The scent feels expensive',
     body: 'Soft, botanical and never overpowering. The whole bathroom feels calmer and the packaging is beautiful enough to gift without wrapping.',
-    product: 'Rose Magic',
+    product: 'Rose Epsom Salt',
   },
   {
     name: 'Rhea D.',
     city: 'Delhi',
     rating: 5,
     title: 'A tiny evening reset',
-    body: 'I use Lavender Bliss as a foot soak after work. It has become the fastest way to tell my brain the day is actually over.',
-    product: 'Lavender Bliss',
+    body: 'I use the Lavender Epsom Salt as a foot soak after work. It has become the fastest way to tell my brain the day is actually over.',
+    product: 'Lavender Epsom Salt',
   },
 ];
 

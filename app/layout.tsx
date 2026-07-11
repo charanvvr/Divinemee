@@ -22,12 +22,12 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
-  title: 'Divine Mee — A Daily Luxury Escape',
+  title: 'Divine Mee Epsom Salt — Rose & Lavender Bath Soaks',
   description:
-    'Divine Mee luxury bath salts. Rose Magic & Lavender Bliss — handcrafted self-care rituals with Epsom salt, pink Himalayan salt and pure essential oils.',
+    'Divine Mee Epsom salt bath soaks in Rose and Lavender — handcrafted self-care rituals with pure Epsom salt, pink Himalayan salt and essential oils.',
   openGraph: {
-    title: 'Divine Mee — Self Care Ritual',
-    description: 'Not a bath product. A daily luxury escape.',
+    title: 'Divine Mee Epsom Salt — Self Care Ritual',
+    description: 'Rose & Lavender Epsom salt bath soaks. A daily luxury escape.',
     images: ['/images/jar-pair.jpg'],
   },
 };

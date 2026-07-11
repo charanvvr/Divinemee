@@ -188,7 +188,7 @@ export default function LuxuryNavigation() {
                 <span>
                   <span className="block font-display text-lg italic text-ink">{p.name}</span>
                   <span className="text-xs text-ink-faint">
-                    Luxury bath salt · {p.weight} · ₹{p.price}
+                    Epsom salt bath soak · {p.weight} · ₹{p.price}
                   </span>
                 </span>
                 <span className="ml-auto text-ink-faint">→</span>

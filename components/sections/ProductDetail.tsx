@@ -80,6 +80,7 @@ export default function ProductDetail({ id }: { id: ProductId }) {
                     src={p.gallery[photo - 1].src}
                     alt={p.gallery[photo - 1].alt}
                     fill
+                    quality={90}
                     sizes="(min-width: 1024px) 50vw, 100vw"
                     className="object-cover"
                   />
@@ -87,7 +88,7 @@ export default function ProductDetail({ id }: { id: ProductId }) {
               </div>
             </div>
             {/* thumbs */}
-            <div className="mt-4 flex gap-3">
+            <div className="mt-4 flex flex-wrap gap-3">
               <button
                 onClick={() => setPhoto(0)}
                 data-cursor="magnetic"
@@ -118,7 +119,7 @@ export default function ProductDetail({ id }: { id: ProductId }) {
           {/* details */}
           <ImageReveal delay={0.1}>
             <p className="text-[11px] font-semibold tracking-[0.34em] text-gold">
-              LUXURY BATH SALT · {p.weight}
+              EPSOM SALT BATH SOAK · {p.weight}
             </p>
             <h1 className="mt-3 font-display text-5xl font-light italic text-ink md:text-6xl">
               {p.name}
