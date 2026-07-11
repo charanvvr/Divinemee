@@ -15,6 +15,8 @@ export default async function OrderSuccessPage({
     .from('orders')
     .select('order_number, total, payment_status, order_items(product_id, product_name, quantity, price)')
     .eq('confirmation_token', token)
+    .eq('payment_status', 'paid')
+    .gt('confirmation_token_expires_at', new Date().toISOString())
     .maybeSingle();
   if (!order) notFound();
 

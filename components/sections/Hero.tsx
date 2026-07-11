@@ -124,17 +124,19 @@ export default function Hero() {
 
     // progressive loading: poster frame, then spaced keyframes so early
     // scrubbing works, then fill the gaps — never block the page
+    const keyframeStep = isMobile ? 5 : 8;
     const queue: number[] = [0];
-    for (let step = 6; step >= 2; step = Math.floor(step / 2)) {
-      for (let i = 0; i < FRAME_COUNT; i += step) {
-        if (!queue.includes(i)) queue.push(i);
-      }
+    const deferredQueue: number[] = [];
+    for (let i = keyframeStep; i < FRAME_COUNT; i += keyframeStep) {
+      if (!deferredQueue.includes(i)) deferredQueue.push(i);
     }
+    if (!deferredQueue.includes(FRAME_COUNT - 1)) deferredQueue.push(FRAME_COUNT - 1);
     for (let i = 0; i < FRAME_COUNT; i += 1) {
-      if (!queue.includes(i)) queue.push(i);
+      if (!queue.includes(i) && !deferredQueue.includes(i)) deferredQueue.push(i);
     }
     let cursor = 0;
-    const CONCURRENCY = 6;
+    let deferredStarted = false;
+    const CONCURRENCY = isMobile ? 2 : 4;
     const loadNext = () => {
       if (cancelled || cursor >= queue.length) return;
       const index = queue[cursor];
@@ -155,6 +157,18 @@ export default function Hero() {
       image.src = frameSource(index, kind);
     };
     for (let i = 0; i < CONCURRENCY; i += 1) loadNext();
+
+    const startDeferredLoading = () => {
+      if (deferredStarted || cancelled) return;
+      deferredStarted = true;
+      queue.push(...deferredQueue);
+      for (let i = 0; i < CONCURRENCY; i += 1) loadNext();
+    };
+    const intentEvents: Array<keyof WindowEventMap> = ['scroll', 'wheel', 'touchstart', 'pointerdown', 'keydown'];
+    intentEvents.forEach((eventName) => {
+      window.addEventListener(eventName, startDeferredLoading, { once: true, passive: true });
+    });
+    const deferredTimer = window.setTimeout(startDeferredLoading, isMobile ? 7_000 : 5_000);
 
     window.addEventListener('resize', resize);
     resize();
@@ -207,12 +221,16 @@ export default function Hero() {
         )
         .to(taglineRef.current, { opacity: 0, y: -24, ease: 'none', duration: 0.1 }, ACT.splitStart + 0.05)
         .to(introRef.current, { opacity: 0, ease: 'none', duration: 0.09 }, ACT.introFade)
-        .to(quickBuyRef.current, { opacity: 0, y: 24, ease: 'none', duration: 0.08 }, ACT.finalStart)
+        .to(
+          quickBuyRef.current,
+          { opacity: 0, y: 24, pointerEvents: 'none', ease: 'none', duration: 0.08 },
+          ACT.finalStart
+        )
         // finale — the collection and its CTAs
         .fromTo(
           finishRef.current,
-          { opacity: 0, y: 60 },
-          { opacity: 1, y: 0, ease: 'none', duration: 0.12 },
+          { opacity: 0, y: 60, pointerEvents: 'none' },
+          { opacity: 1, y: 0, pointerEvents: 'auto', ease: 'none', duration: 0.12 },
           ACT.finalStart + 0.08
         );
     }, section);
@@ -220,7 +238,9 @@ export default function Hero() {
     return () => {
       cancelled = true;
       ctx.revert();
+      window.clearTimeout(deferredTimer);
       window.removeEventListener('resize', resize);
+      intentEvents.forEach((eventName) => window.removeEventListener(eventName, startDeferredLoading));
       images.forEach((image) => {
         image.onload = null;
         image.onerror = null;
@@ -387,7 +407,7 @@ export default function Hero() {
         {/* finale — the collection */}
         <div
           ref={finishRef}
-          className="absolute inset-x-0 bottom-0 z-20 flex justify-center px-5 pb-14 opacity-0 md:pb-16"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center px-5 pb-14 opacity-0 md:pb-16"
         >
           <div className="w-full max-w-lg rounded-[2rem] border border-white/55 bg-paper/80 p-6 text-center shadow-lift backdrop-blur-xl md:p-8">
             <p className="text-[9px] font-semibold tracking-[0.34em] text-gold">THE DIVINE MEE COLLECTION</p>

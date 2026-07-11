@@ -5,14 +5,12 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import Footer from '@/components/experience/Footer';
+import { safeRelativePath } from '@/lib/request-security';
 
 function LoginPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const requestedRedirect = searchParams.get('redirect') || '/account';
-  const redirect = requestedRedirect.startsWith('/') && !requestedRedirect.startsWith('//')
-    ? requestedRedirect
-    : '/account';
+  const redirect = safeRelativePath(searchParams.get('redirect'));
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,7 +30,7 @@ function LoginPageContent() {
     });
 
     if (error) {
-      setError(error.message);
+      setError('Email or password is incorrect.');
       setLoading(false);
       return;
     }
@@ -45,7 +43,7 @@ function LoginPageContent() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback?next=${redirect}`,
+        redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirect)}`,
       },
     });
     if (error) setError(error.message);
@@ -73,16 +71,22 @@ function LoginPageContent() {
             )}
 
             <form onSubmit={handleLogin} className="mt-6 space-y-4">
+              <label className="sr-only" htmlFor="login-email">Email</label>
               <input
+                id="login-email"
                 type="email"
+                autoComplete="email"
                 required
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full rounded-2xl border border-ink/10 bg-ivory px-5 py-4 text-[14px] text-ink outline-none transition-colors placeholder:text-ink-faint focus:border-gold"
               />
+              <label className="sr-only" htmlFor="login-password">Password</label>
               <input
+                id="login-password"
                 type="password"
+                autoComplete="current-password"
                 required
                 placeholder="Password"
                 value={password}
@@ -90,11 +94,7 @@ function LoginPageContent() {
                 className="w-full rounded-2xl border border-ink/10 bg-ivory px-5 py-4 text-[14px] text-ink outline-none transition-colors placeholder:text-ink-faint focus:border-gold"
               />
 
-              <div className="flex items-center justify-between text-[13px]">
-                <label className="flex items-center gap-2 text-ink-soft">
-                  <input type="checkbox" className="accent-[#b08538]" />
-                  Remember me
-                </label>
+              <div className="flex items-center justify-end text-[13px]">
                 <Link
                   href="/forgot-password"
                   className="text-gold transition-colors hover:text-ink"

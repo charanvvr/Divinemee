@@ -72,8 +72,8 @@ CREATE POLICY "Products are public" ON products FOR SELECT USING (true);
 
 -- Seed the two products
 INSERT INTO products (id, name, price, mrp, weight, image_url) VALUES
-  ('rose-magic',     'Rose Magic',     249, 499, '400 g', '/images/cutouts/rose-magic.png'),
-  ('lavender-bliss', 'Lavender Bliss', 249, 499, '400 g', '/images/cutouts/lavender-bliss.png')
+  ('rose-magic',     'Rose Epsom Salt',     279, 499, '400 g', '/images/cutouts/rose-magic.png'),
+  ('lavender-bliss', 'Lavender Epsom Salt', 279, 499, '400 g', '/images/cutouts/lavender-bliss.png')
 ON CONFLICT (id) DO NOTHING;
 
 -- ── Orders ───────────────────────────────────────────────────

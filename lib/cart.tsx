@@ -69,6 +69,28 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
+    const onStorage = (event: StorageEvent) => {
+      if (event.key !== 'divinemee-cart') return;
+      try {
+        const parsed = event.newValue ? (JSON.parse(event.newValue) as CartItem[]) : [];
+        setItems(
+          parsed.filter(
+            (item) =>
+              item.id in PRODUCTS &&
+              Number.isInteger(item.qty) &&
+              item.qty > 0 &&
+              item.qty <= 20
+          )
+        );
+      } catch {
+        // Ignore malformed data written by another tab.
+      }
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, []);
+
+  useEffect(() => {
     if (hydrated) {
       window.localStorage.setItem('divinemee-cart', JSON.stringify(items));
     }
@@ -89,8 +111,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
       .from('cart_items')
       .select('product_id, quantity')
       .eq('user_id', user.id)
-      .then((result: { data: { product_id: string; quantity: number }[] | null }) => {
-        const { data } = result;
+      .then((result: {
+        data: { product_id: string; quantity: number }[] | null;
+        error: { message: string } | null;
+      }) => {
+        const { data, error } = result;
+        if (error) {
+          lastUserId.current = null;
+          setRemoteReady(false);
+          return;
+        }
         setItems((guestItems) => {
           const merged = new Map<ProductId, number>();
           data?.forEach((item) => {
@@ -111,15 +141,27 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (!user || !remoteReady) return;
     const timer = window.setTimeout(async () => {
       const supabase = createClient();
-      await supabase.from('cart_items').delete().eq('user_id', user.id);
       if (items.length) {
-        await supabase.from('cart_items').insert(
+        await supabase.from('cart_items').upsert(
           items.map((item) => ({
             user_id: user.id,
             product_id: item.id,
             quantity: item.qty,
-          }))
+          })),
+          { onConflict: 'user_id,product_id' }
         );
+        const staleProductIds = PRODUCT_LIST
+          .map((product) => product.id)
+          .filter((productId) => !items.some((item) => item.id === productId));
+        if (staleProductIds.length) {
+          await supabase
+            .from('cart_items')
+            .delete()
+            .eq('user_id', user.id)
+            .in('product_id', staleProductIds);
+        }
+      } else {
+        await supabase.from('cart_items').delete().eq('user_id', user.id);
       }
     }, 250);
     return () => window.clearTimeout(timer);
@@ -143,6 +185,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const setQty = useCallback((id: ProductId, qty: number) => {
+    if (!Number.isFinite(qty)) return;
     if (qty <= 0) {
       setItems((prev) => prev.filter((i) => i.id !== id));
     } else {

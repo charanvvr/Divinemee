@@ -7,26 +7,26 @@ import { AnimatePresence, motion } from 'framer-motion';
 const INGREDIENTS = [
   {
     name: 'Epsom Salt',
-    eyebrow: 'MAGNESIUM',
-    text: 'Pure magnesium sulphate that relaxes tired muscles, eases aches and supports deeper sleep.',
+    eyebrow: 'MAGNESIUM SULPHATE',
+    text: 'Mineral crystals that dissolve into warm water and form the base of the bath soak.',
     image: '/images/macro-lavender-salt.jpg',
   },
   {
     name: 'Pink Himalayan Salt',
-    eyebrow: '84 TRACE MINERALS',
-    text: 'Mineral-rich crystals gently cleanse the skin while supporting circulation and a restorative soak.',
+    eyebrow: 'MINERAL SALT',
+    text: 'Pink crystals add colour, texture and a mineral-rich feel to the Rose blend.',
     image: '/images/ritual-rose-soak.jpg',
   },
   {
     name: 'Natural Sea Salt',
-    eyebrow: 'CALCIUM + POTASSIUM',
-    text: 'Naturally occurring minerals soothe irritated skin, soften hard water and make every soak feel silkier.',
+    eyebrow: 'NATURAL CRYSTALS',
+    text: 'Sea-salt crystals complement the Epsom salt base and dissolve into the bath water.',
     image: '/images/ritual-bath.jpg',
   },
   {
     name: 'Sodium Bicarbonate',
     eyebrow: 'SKIN SOFTENING',
-    text: 'A familiar, gentle ingredient that softens skin and calms the dry, tight feeling left by a long day.',
+    text: 'A familiar bath ingredient included for a clean, silky-feeling soak.',
     image: '/images/jar-lavender-open.jpg',
   },
   {
@@ -60,7 +60,7 @@ export default function IngredientStory() {
                 </motion.div>
               </AnimatePresence>
               <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/5 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-7 text-white md:p-10">
+              <div className="absolute bottom-5 left-5 right-5 rounded-2xl bg-ink p-5 text-white md:bottom-7 md:left-7 md:right-7 md:p-7">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={ingredient.name}
@@ -69,9 +69,9 @@ export default function IngredientStory() {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.42 }}
                   >
-                    <p className="text-[9px] font-semibold tracking-[0.32em] text-white/65">{ingredient.eyebrow}</p>
+                    <p className="text-[9px] font-semibold tracking-[0.32em] text-white">{ingredient.eyebrow}</p>
                     <p className="mt-2 font-display text-4xl font-light italic">{ingredient.name}</p>
-                    <p className="mt-3 max-w-md text-[13px] font-light leading-relaxed text-white/75">{ingredient.text}</p>
+                    <p className="mt-3 max-w-md text-[13px] font-light leading-relaxed text-white">{ingredient.text}</p>
                   </motion.div>
                 </AnimatePresence>
               </div>
@@ -123,7 +123,7 @@ export default function IngredientStory() {
             </div>
 
             <p className="mt-8 text-[12px] font-light tracking-wide text-ink-faint">
-              No parabens · No sulphates · No artificial dyes · Cruelty-free
+              Refer to the product label for the complete ingredient and allergy information.
             </p>
           </div>
         </div>

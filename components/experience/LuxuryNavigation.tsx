@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -11,7 +11,6 @@ const LINKS = [
   { label: 'Products', href: '/#products' },
   { label: 'Ingredients', href: '/#ingredients' },
   { label: 'Ritual', href: '/#ritual' },
-  { label: 'Reviews', href: '/#reviews' },
   { label: 'About', href: '/#about' },
 ];
 
@@ -21,6 +20,8 @@ export default function LuxuryNavigation() {
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const searchPanelRef = useRef<HTMLDivElement>(null);
+  const searchButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -34,6 +35,49 @@ export default function LuxuryNavigation() {
     setSearchOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    if (!searchOpen) return;
+    const panel = searchPanelRef.current;
+    const trigger = searchButtonRef.current;
+    const focusable = () => Array.from(
+      panel?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])') || []
+    );
+    focusable()[0]?.focus();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setSearchOpen(false);
+      if (event.key !== 'Tab') return;
+      const elements = focusable();
+      if (!elements.length) return;
+      const first = elements[0];
+      const last = elements[elements.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = previousOverflow;
+      trigger?.focus();
+    };
+  }, [searchOpen]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    document.addEventListener('keydown', closeOnEscape);
+    return () => document.removeEventListener('keydown', closeOnEscape);
+  }, [menuOpen]);
+
   const solid = scrolled || pathname !== '/' || menuOpen;
 
   return (
@@ -45,7 +89,7 @@ export default function LuxuryNavigation() {
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:h-[68px] md:px-8">
           {/* left: logo */}
-          <Link href="/" data-cursor="magnetic" className="flex items-center gap-2.5" aria-label="Divine Mee home">
+          <Link href="/" data-cursor="magnetic" className="flex items-center gap-2.5" title="Home">
             <Image
               src="/images/cutouts/logo.png"
               alt=""
@@ -79,6 +123,7 @@ export default function LuxuryNavigation() {
           {/* right: search / account / cart */}
           <div className="flex items-center gap-1.5">
             <button
+              ref={searchButtonRef}
               data-cursor="magnetic"
               onClick={() => setSearchOpen(true)}
               className="flex h-10 w-10 items-center justify-center rounded-full text-ink-soft transition-colors duration-300 hover:bg-ink/5 hover:text-ink"
@@ -124,6 +169,8 @@ export default function LuxuryNavigation() {
               onClick={() => setMenuOpen(!menuOpen)}
               className="flex h-10 w-10 items-center justify-center rounded-full text-ink-soft lg:hidden"
               aria-label="Menu"
+              aria-expanded={menuOpen}
+              aria-controls="mobile-navigation"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
                 {menuOpen ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h10" />}
@@ -134,6 +181,7 @@ export default function LuxuryNavigation() {
 
         {/* mobile dropdown */}
         <div
+          id="mobile-navigation"
           className={`glass-nav overflow-hidden transition-all duration-500 ease-silk lg:hidden ${
             menuOpen ? 'max-h-96 border-t border-ink/5' : 'max-h-0'
           }`}
@@ -158,12 +206,17 @@ export default function LuxuryNavigation() {
         className={`fixed inset-0 z-[140] transition-all duration-400 ${
           searchOpen ? 'visible opacity-100' : 'invisible opacity-0'
         }`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Product search"
+        aria-hidden={!searchOpen}
       >
         <div
           className="absolute inset-0 bg-ink/30 backdrop-blur-sm"
           onClick={() => setSearchOpen(false)}
         />
         <div
+          ref={searchPanelRef}
           className={`glass-panel absolute left-1/2 top-24 w-[min(34rem,calc(100vw-2rem))] -translate-x-1/2 rounded-3xl p-6 shadow-lift transition-all duration-500 ease-silk ${
             searchOpen ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'
           }`}

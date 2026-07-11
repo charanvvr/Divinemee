@@ -5,14 +5,12 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import Footer from '@/components/experience/Footer';
+import { safeRelativePath } from '@/lib/request-security';
 
 function RegisterPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const requestedRedirect = searchParams.get('redirect') || '/account';
-  const redirect = requestedRedirect.startsWith('/') && !requestedRedirect.startsWith('//')
-    ? requestedRedirect
-    : '/account';
+  const redirect = safeRelativePath(searchParams.get('redirect'));
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -32,8 +30,8 @@ function RegisterPageContent() {
       setError('Passwords do not match.');
       return;
     }
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters.');
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters.');
       return;
     }
 
@@ -44,6 +42,7 @@ function RegisterPageContent() {
       password,
       options: {
         data: { full_name: name },
+        emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirect)}`,
       },
     });
 
@@ -67,7 +66,7 @@ function RegisterPageContent() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback?next=${redirect}`,
+        redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirect)}`,
       },
     });
     if (error) setError(error.message);
@@ -100,32 +99,46 @@ function RegisterPageContent() {
             )}
 
             <form onSubmit={handleRegister} className="mt-6 space-y-4">
+              <label className="sr-only" htmlFor="register-name">Full name</label>
               <input
+                id="register-name"
                 type="text"
+                autoComplete="name"
                 required
                 placeholder="Full name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="w-full rounded-2xl border border-ink/10 bg-ivory px-5 py-4 text-[14px] text-ink outline-none transition-colors placeholder:text-ink-faint focus:border-gold"
               />
+              <label className="sr-only" htmlFor="register-email">Email</label>
               <input
+                id="register-email"
                 type="email"
+                autoComplete="email"
                 required
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full rounded-2xl border border-ink/10 bg-ivory px-5 py-4 text-[14px] text-ink outline-none transition-colors placeholder:text-ink-faint focus:border-gold"
               />
+              <label className="sr-only" htmlFor="register-password">Password</label>
               <input
+                id="register-password"
                 type="password"
+                minLength={8}
+                autoComplete="new-password"
                 required
-                placeholder="Password (min. 6 characters)"
+                placeholder="Password (min. 8 characters)"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full rounded-2xl border border-ink/10 bg-ivory px-5 py-4 text-[14px] text-ink outline-none transition-colors placeholder:text-ink-faint focus:border-gold"
               />
+              <label className="sr-only" htmlFor="register-confirm">Confirm password</label>
               <input
+                id="register-confirm"
                 type="password"
+                minLength={8}
+                autoComplete="new-password"
                 required
                 placeholder="Confirm password"
                 value={confirm}

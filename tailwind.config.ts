@@ -18,10 +18,10 @@ const config: Config = {
         ink: {
           DEFAULT: '#211a14',
           soft: '#4a4038',
-          faint: '#8a7d70',
+          faint: '#6b5f54',
         },
         gold: {
-          DEFAULT: '#b08538',
+          DEFAULT: '#7d5a20',
           bright: '#d9b06a',
           soft: '#ecdfc3',
         },

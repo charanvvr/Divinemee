@@ -1,13 +1,12 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { appOrigin, safeRelativePath } from '@/lib/request-security';
 
 export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url);
+  const { searchParams } = new URL(request.url);
   const code = searchParams.get('code');
-  const requestedNext = searchParams.get('next') ?? '/account';
-  const next = requestedNext.startsWith('/') && !requestedNext.startsWith('//')
-    ? requestedNext
-    : '/account';
+  const next = safeRelativePath(searchParams.get('next'));
+  const origin = appOrigin(request);
 
   if (code) {
     const supabase = await createClient();

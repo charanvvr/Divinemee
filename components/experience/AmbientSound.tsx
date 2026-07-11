@@ -38,7 +38,7 @@ export default function AmbientSound() {
       <button
         type="button"
         onClick={toggle}
-        aria-label={playing ? 'Pause background music' : 'Play background music'}
+        aria-label={playing ? 'Sound on - pause background music' : 'Sound off - play background music'}
         aria-pressed={playing}
         title={playing ? 'Pause music' : 'Play music'}
         className="fixed right-4 top-[4.8rem] z-[105] flex h-10 items-center gap-2 rounded-full border border-white/70 bg-paper/80 px-3.5 text-ink shadow-card backdrop-blur-xl transition-all duration-500 hover:bg-paper md:right-6 md:top-[5.25rem]"

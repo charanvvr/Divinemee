@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { PRODUCTS, type ProductId } from '@/lib/products';
+import { INDIAN_STATES, isIndianMobile, isIndianPin, normalizeIndianMobile } from '@/lib/india-address';
 
 export const cartItemsSchema = z
   .array(
@@ -13,12 +14,13 @@ export const cartItemsSchema = z
 
 export const addressSchema = z.object({
   fullName: z.string().trim().min(2).max(100),
-  phone: z.string().trim().regex(/^[0-9+ -]{10,15}$/),
-  email: z.string().trim().email(),
+  phone: z.string().trim().refine(isIndianMobile, 'Enter a valid Indian mobile number.').transform(normalizeIndianMobile),
+  email: z.string().trim().email().max(254),
   address: z.string().trim().min(5).max(250),
   city: z.string().trim().min(2).max(80),
-  state: z.string().trim().min(2).max(80),
-  pinCode: z.string().trim().regex(/^[0-9]{6}$/),
+  state: z.enum(INDIAN_STATES),
+  pinCode: z.string().trim().refine(isIndianPin, 'Enter a valid Indian PIN code.'),
+  country: z.literal('IN'),
 });
 
 export function calculateOrder(items: z.infer<typeof cartItemsSchema>) {

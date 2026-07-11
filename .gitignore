@@ -29,3 +29,7 @@ assets/raw/
 
 .vercel
 *.tsbuildinfo
+
+# Local QA artifacts (the Markdown audit is committed separately)
+audit/evidence/playwright/
+audit/evidence/playwright-report/

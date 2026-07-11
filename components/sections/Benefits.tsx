@@ -5,29 +5,29 @@ import ImageReveal from '@/components/media/ImageReveal';
 
 const BENEFITS = [
   {
-    title: 'Muscle Relief',
-    text: 'Magnesium soaks straight into tired muscles, easing knots and post-workout aches.',
+    title: 'Post-Workout Pause',
+    text: 'Warm water and mineral salts create a comforting pause after movement.',
     icon: (
       <path d="M4 14c2-4 5-6 8-6s6 2 8 6M8 14v4m8-4v4" strokeLinecap="round" />
     ),
   },
   {
-    title: 'Stress Relief',
-    text: 'Warm water and real botanicals slow the breath and quiet a racing mind.',
+    title: 'Quiet Ritual',
+    text: 'Warm water and real botanicals turn an ordinary evening into time set aside for yourself.',
     icon: (
       <path d="M12 4v3m5.7-.7-2.2 2.2M20 12h-3M4 12h3M6.3 6.3l2.2 2.2M12 21a6 6 0 0 0 6-6H6a6 6 0 0 0 6 6z" strokeLinecap="round" strokeLinejoin="round" />
     ),
   },
   {
-    title: 'Better Sleep',
-    text: 'A lavender soak before bed is the oldest sleep ritual there is. It still works.',
+    title: 'Evening Wind-Down',
+    text: 'Lavender, warm steam and an unhurried soak fit naturally into a bedtime routine.',
     icon: (
       <path d="M20 13.5A8 8 0 1 1 10.5 4 6.5 6.5 0 0 0 20 13.5z" strokeLinejoin="round" />
     ),
   },
   {
-    title: 'Body Detox',
-    text: 'Mineral salts draw out impurities while supporting natural circulation.',
+    title: 'Fresh Finish',
+    text: 'A mineral soak rinses clean and leaves the ritual feeling fresh from start to finish.',
     icon: (
       <path d="M12 3c3.5 4 6 7 6 10a6 6 0 1 1-12 0c0-3 2.5-6 6-10z" strokeLinejoin="round" />
     ),
@@ -41,7 +41,7 @@ const BENEFITS = [
   },
   {
     title: 'Rejuvenation',
-    text: 'Step out feeling lighter — skin refreshed, shoulders down, mood lifted.',
+    text: 'A warm botanical bath gives the day a clear, sensorial closing moment.',
     icon: (
       <path d="M12 5v14m0-14 4 4m-4-4-4 4m4 10 4-4m-4 4-4-4" strokeLinecap="round" strokeLinejoin="round" />
     ),
@@ -70,7 +70,7 @@ export default function Benefits() {
             className="mx-auto mt-4 max-w-2xl font-display font-light leading-tight text-ink"
             style={{ fontSize: 'clamp(2rem, 4vw, 3.4rem)' }}
           >
-            One soak. <em className="italic text-gold">Six benefits.</em>
+            One soak. <em className="italic text-gold">Six ritual notes.</em>
           </h2>
         </ImageReveal>
 

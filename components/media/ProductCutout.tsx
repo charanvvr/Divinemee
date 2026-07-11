@@ -31,6 +31,7 @@ export default function ProductCutout({
         alt={`Divine Mee ${p.name} luxury bath salt jar`}
         width={500}
         height={1000}
+        sizes="(max-width: 767px) 180px, 500px"
         priority={priority}
         className="h-full w-auto select-none drop-shadow-[0_50px_70px_rgba(20,12,8,0.45)]"
         draggable={false}

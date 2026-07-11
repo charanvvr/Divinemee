@@ -1,12 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { PRODUCTS, useCart } from '@/lib/cart';
 import { useAuth } from '@/lib/auth-context';
 import Footer from '@/components/experience/Footer';
+import { INDIAN_MOBILE_HTML_PATTERN, INDIAN_PIN_HTML_PATTERN, INDIAN_STATES } from '@/lib/india-address';
 
 declare global {
   interface Window {
@@ -42,10 +43,14 @@ export default function CheckoutPage() {
   const { items, total, clear } = useCart();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const submitting = useRef(false);
+  const idempotencyKey = useRef<string | null>(null);
   const shipping = total >= 399 || total === 0 ? 0 : 49;
 
   async function placeOrder(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (submitting.current) return;
+    submitting.current = true;
     setError('');
     setLoading(true);
     const form = new FormData(event.currentTarget);
@@ -57,15 +62,17 @@ export default function CheckoutPage() {
       city: String(form.get('city') || ''),
       state: String(form.get('state') || ''),
       pinCode: String(form.get('pinCode') || ''),
+      country: 'IN' as const,
     };
 
     try {
+      idempotencyKey.current ||= crypto.randomUUID();
       const loaded = await loadRazorpay();
       if (!loaded) throw new Error('Unable to load the secure payment window.');
       const response = await fetch('/api/razorpay/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items }),
+        body: JSON.stringify({ items, customer, idempotencyKey: idempotencyKey.current }),
       });
       const order = await response.json();
       if (!response.ok) throw new Error(order.error || 'Unable to start payment.');
@@ -79,30 +86,42 @@ export default function CheckoutPage() {
         order_id: order.id,
         prefill: { name: customer.fullName, email: customer.email, contact: customer.phone },
         theme: { color: '#0b0712' },
-        modal: { ondismiss: () => setLoading(false) },
+        modal: {
+          ondismiss: () => {
+            submitting.current = false;
+            setLoading(false);
+          },
+        },
         handler: async (payment: PaymentResponse) => {
           const verification = await fetch('/api/razorpay/verify-payment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ...payment, items, customer }),
+            body: JSON.stringify({
+              ...payment,
+              checkoutSessionId: order.checkoutSessionId,
+            }),
           });
           const result = await verification.json();
           if (!verification.ok) {
             setError(result.error || 'Payment verification failed.');
+            submitting.current = false;
             setLoading(false);
             return;
           }
           clear();
+          idempotencyKey.current = null;
           router.push(`/order/success?token=${encodeURIComponent(result.token)}`);
         },
       });
       razorpay.on('payment.failed', (response) => {
         setError(response.error?.description || 'Payment failed. Please try again.');
+        submitting.current = false;
         setLoading(false);
       });
       razorpay.open();
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : 'Unable to complete checkout.');
+      submitting.current = false;
       setLoading(false);
     }
   }
@@ -127,16 +146,29 @@ export default function CheckoutPage() {
                 <h2 className="text-[12px] font-semibold tracking-[0.26em] text-ink-faint">CUSTOMER INFORMATION</h2>
                 {!user && <p className="mt-3 text-[13px] text-ink-soft">Checking out as a guest. <Link href="/login?redirect=/checkout" className="text-gold">Sign in</Link> to keep this order in your account.</p>}
                 <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                  <input name="fullName" required placeholder="Full name" className={inputClass} />
-                  <input name="phone" required type="tel" pattern="[0-9+ -]{10,15}" placeholder="Phone" className={inputClass} />
-                  <input name="email" defaultValue={user?.email || ''} required type="email" placeholder="Email" className={`${inputClass} sm:col-span-2`} />
+                  <label className="sr-only" htmlFor="checkout-full-name">Full name</label>
+                  <input id="checkout-full-name" name="fullName" autoComplete="name" required minLength={2} maxLength={100} placeholder="Full name" className={inputClass} />
+                  <label className="sr-only" htmlFor="checkout-phone">Phone</label>
+                  <input id="checkout-phone" name="phone" autoComplete="tel" required type="tel" inputMode="tel" pattern={INDIAN_MOBILE_HTML_PATTERN} title="Enter a valid Indian mobile number" placeholder="Indian mobile number" className={inputClass} />
+                  <label className="sr-only" htmlFor="checkout-email">Email</label>
+                  <input id="checkout-email" name="email" autoComplete="email" defaultValue={user?.email || ''} required type="email" maxLength={254} placeholder="Email" className={`${inputClass} sm:col-span-2`} />
                 </div>
                 <h2 className="mt-10 text-[12px] font-semibold tracking-[0.26em] text-ink-faint">SHIPPING ADDRESS</h2>
                 <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                  <input name="address" required placeholder="House, street and area" className={`${inputClass} sm:col-span-2`} />
-                  <input name="city" required placeholder="City" className={inputClass} />
-                  <input name="state" required placeholder="State" className={inputClass} />
-                  <input name="pinCode" required pattern="[0-9]{6}" placeholder="PIN code" className={inputClass} />
+                  <label className="sr-only" htmlFor="checkout-address">House, street and area</label>
+                  <input id="checkout-address" name="address" autoComplete="street-address" required minLength={5} maxLength={250} placeholder="House, street and area" className={`${inputClass} sm:col-span-2`} />
+                  <label className="sr-only" htmlFor="checkout-city">City</label>
+                  <input id="checkout-city" name="city" autoComplete="address-level2" required minLength={2} maxLength={80} placeholder="City" className={inputClass} />
+                  <label className="sr-only" htmlFor="checkout-state">State or union territory</label>
+                  <select id="checkout-state" name="state" autoComplete="address-level1" required defaultValue="" className={inputClass}>
+                    <option value="" disabled>State / union territory</option>
+                    {INDIAN_STATES.map((state) => <option key={state} value={state}>{state}</option>)}
+                  </select>
+                  <label className="sr-only" htmlFor="checkout-pin">PIN code</label>
+                  <input id="checkout-pin" name="pinCode" autoComplete="postal-code" inputMode="numeric" required pattern={INDIAN_PIN_HTML_PATTERN} maxLength={6} title="Enter a valid six-digit Indian PIN code" placeholder="Indian PIN code" className={inputClass} />
+                  <label className="sr-only" htmlFor="checkout-country">Country</label>
+                  <input id="checkout-country" value="India" readOnly aria-readonly="true" className={`${inputClass} cursor-not-allowed opacity-70`} />
+                  <p className="text-[12px] text-ink-faint sm:col-span-2">Delivery is currently available within India only.</p>
                 </div>
                 <h2 className="mt-10 text-[12px] font-semibold tracking-[0.26em] text-ink-faint">PAYMENT</h2>
                 <div className="mt-5 rounded-2xl border border-gold bg-paper px-5 py-4">

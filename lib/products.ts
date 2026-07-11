@@ -13,8 +13,6 @@ export interface Product {
   gallery: { src: string; alt: string }[];
   accent: string;
   accentSoft: string;
-  rating: number;
-  reviewCount: number;
   benefits: string[];
   howTo: string;
 }
@@ -41,9 +39,7 @@ export const PRODUCTS: Record<ProductId, Product> = {
     ],
     accent: '#c97c92',
     accentSoft: '#f6e7eb',
-    rating: 4.9,
-    reviewCount: 142,
-    benefits: ['Stress relief', 'Muscle relief', 'Better sleep', 'Gentle exfoliation'],
+    benefits: ['Rose botanical aroma', 'Mineral-rich soak', 'Evening ritual', 'Gentle exfoliation'],
     howTo:
       'Pour 2–3 tablespoons into a warm bath or foot soak. Let the crystals dissolve fully, then soak for 15–20 minutes. Breathe.',
   },
@@ -53,7 +49,7 @@ export const PRODUCTS: Record<ProductId, Product> = {
     tagline: 'Lavender bath soak · stillness you can soak in',
     scent: 'French lavender buds · sea salt · midnight calm',
     description:
-      'Pure Epsom salt scented with French lavender and scattered with real buds. The evening slows down, shoulders drop, and sleep comes easier.',
+      'Pure Epsom salt scented with French lavender and scattered with real buds. The evening slows down, warm steam rises, and the ritual feels unhurried.',
     price: 279,
     mrp: 499,
     weight: '400 g',
@@ -67,9 +63,7 @@ export const PRODUCTS: Record<ProductId, Product> = {
     ],
     accent: '#8a72c0',
     accentSoft: '#ece7f6',
-    rating: 4.9,
-    reviewCount: 186,
-    benefits: ['Deep relaxation', 'Better sleep', 'Body detox', 'Calms the mind'],
+    benefits: ['Lavender botanical aroma', 'Mineral-rich soak', 'Evening ritual', 'Skin-softening bath'],
     howTo:
       'Pour 2–3 tablespoons into a warm bath or foot soak. Let the crystals dissolve fully, then soak for 15–20 minutes. Exhale.',
   },

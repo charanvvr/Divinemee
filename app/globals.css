@@ -7,11 +7,13 @@
   --ivory-deep: #efe8db;
   --paper: #fdfbf7;
   --ink: #211a14;
-  --gold: #b08538;
+  --gold: #7d5a20;
 }
 
 html {
   background: var(--ivory);
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 html.lenis,
@@ -31,7 +33,8 @@ body {
   background: var(--ivory);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 ::selection {

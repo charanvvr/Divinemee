@@ -147,6 +147,7 @@ export default function FeaturedProducts() {
                     alt={`Divine Mee ${product.name} bath soak`}
                     width={430}
                     height={850}
+                    sizes="(max-width: 767px) 220px, 430px"
                     quality={90}
                     priority
                     className="relative z-10 h-[94%] w-auto object-contain drop-shadow-[0_42px_35px_rgba(45,25,25,0.28)]"

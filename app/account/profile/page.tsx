@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { redirect } from 'next/navigation';
 import ProfileForm from './profile-form';
 
 export default async function ProfilePage() {
@@ -6,10 +7,11 @@ export default async function ProfilePage() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  if (!user) redirect('/login?redirect=/account/profile');
   const { data } = await supabase
     .from('profiles')
     .select('full_name, phone')
-    .eq('id', user!.id)
+    .eq('id', user.id)
     .maybeSingle();
 
   return (
@@ -18,7 +20,7 @@ export default async function ProfilePage() {
       <ProfileForm
         initialName={data?.full_name || ''}
         initialPhone={data?.phone || ''}
-        email={user!.email || ''}
+        email={user.email || ''}
       />
     </section>
   );

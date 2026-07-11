@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,6 +10,41 @@ import { PRODUCTS, useCart } from '@/lib/cart';
 export default function CartDrawer() {
   const { items, total, isOpen, close, setQty, remove } = useCart();
   const freeShipping = total >= 399 || total === 0;
+  const drawerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const previousFocus = document.activeElement as HTMLElement | null;
+    const drawer = drawerRef.current;
+    const focusable = () => Array.from(
+      drawer?.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), input:not([disabled])') || []
+    );
+    focusable()[0]?.focus();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') close();
+      if (event.key !== 'Tab') return;
+      const elements = focusable();
+      if (!elements.length) return;
+      const first = elements[0];
+      const last = elements[elements.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = previousOverflow;
+      previousFocus?.focus();
+    };
+  }, [close, isOpen]);
 
   return (
     <AnimatePresence>
@@ -24,6 +60,7 @@ export default function CartDrawer() {
             className="fixed inset-0 z-[110] bg-ink/25 backdrop-blur-sm"
           />
           <motion.aside
+            ref={drawerRef}
             key="drawer"
             initial={{ x: '108%' }}
             animate={{ x: 0 }}
@@ -31,6 +68,8 @@ export default function CartDrawer() {
             transition={{ type: 'spring', stiffness: 240, damping: 30 }}
             className="glass-panel fixed bottom-3 right-3 top-3 z-[120] flex w-[min(26rem,calc(100vw-1.5rem))] flex-col overflow-hidden rounded-3xl shadow-lift"
             aria-label="Shopping cart"
+            role="dialog"
+            aria-modal="true"
           >
             <div className="flex items-center justify-between border-b border-ink/[0.07] px-7 py-5">
               <div>

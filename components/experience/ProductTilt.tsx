@@ -101,6 +101,7 @@ export default function ProductTilt({
           alt={`Divine Mee ${p.name} bath soak`}
           width={500}
           height={1000}
+          sizes="(max-width: 767px) 180px, 500px"
           quality={90}
           priority
           className="h-full w-auto"
@@ -126,7 +127,7 @@ export default function ProductTilt({
             WebkitMaskImage: 'linear-gradient(to top, transparent 30%, black 100%)',
           }}
         >
-          <Image src={p.cutout} alt="" width={500} height={1000} className="h-full w-auto" aria-hidden />
+          <Image src={p.cutout} alt="" width={500} height={1000} sizes="(max-width: 767px) 180px, 500px" className="h-full w-auto" aria-hidden />
         </div>
       </div>
       {/* grounded shadow */}

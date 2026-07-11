@@ -4,7 +4,6 @@ import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { PRODUCTS, useCart, type ProductId } from '@/lib/cart';
-import { REVIEWS } from '@/lib/reviews';
 import ProductTilt from '@/components/experience/ProductTilt';
 import ImageReveal from '@/components/media/ImageReveal';
 import { flyToBag } from '@/lib/flyToBag';
@@ -48,7 +47,6 @@ export default function ProductDetail({ id }: { id: ProductId }) {
   const [qty, setQty] = useState(1);
   const [photo, setPhoto] = useState(0);
   const buyRef = useRef<HTMLButtonElement>(null);
-  const productReviews = REVIEWS.filter((r) => r.product === p.name);
 
   return (
     <section className="bg-ivory pb-24 pt-24 md:pt-28">
@@ -124,12 +122,6 @@ export default function ProductDetail({ id }: { id: ProductId }) {
             <h1 className="mt-3 font-display text-5xl font-light italic text-ink md:text-6xl">
               {p.name}
             </h1>
-            <div className="mt-4 flex items-center gap-2 text-[14px]">
-              <span className="text-gold">★★★★★</span>
-              <span className="font-medium text-ink-soft">{p.rating}</span>
-              <span className="text-ink-faint">({p.reviewCount} reviews)</span>
-            </div>
-
             <p className="mt-6 max-w-lg text-[15px] font-light leading-relaxed text-ink-soft">
               {p.description}
             </p>
@@ -217,37 +209,6 @@ export default function ProductDetail({ id }: { id: ProductId }) {
           </ImageReveal>
         </div>
 
-        {/* reviews for this product */}
-        {productReviews.length > 0 && (
-          <div className="mt-24">
-            <ImageReveal>
-              <h2 className="font-display text-3xl font-light text-ink">
-                What people say about <em className="italic text-gold">{p.name}</em>
-              </h2>
-            </ImageReveal>
-            <div className="mt-8 grid gap-5 md:grid-cols-2">
-              {productReviews.map((r, i) => (
-                <ImageReveal key={r.name} delay={i * 0.1}>
-                  <figure className="rounded-[1.6rem] border border-ink/[0.06] bg-paper p-7">
-                    <span className="text-[13px] text-gold">
-                      {'★'.repeat(r.rating)}
-                      <span className="text-ink/15">{'★'.repeat(5 - r.rating)}</span>
-                    </span>
-                    <p className="mt-3 font-display text-xl font-light italic text-ink">
-                      “{r.title}”
-                    </p>
-                    <blockquote className="mt-3 text-[14px] font-light leading-relaxed text-ink-soft">
-                      {r.body}
-                    </blockquote>
-                    <figcaption className="mt-4 text-[13px] text-ink-faint">
-                      <strong className="font-semibold text-ink">{r.name}</strong> · {r.city}
-                    </figcaption>
-                  </figure>
-                </ImageReveal>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </section>
   );

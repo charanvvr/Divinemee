@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { redirect } from 'next/navigation';
 import AddressesManager from './addresses-manager';
 
 export default async function AddressesPage() {
@@ -6,10 +7,11 @@ export default async function AddressesPage() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  if (!user) redirect('/login?redirect=/account/addresses');
   const { data } = await supabase
     .from('addresses')
     .select('*')
-    .eq('user_id', user!.id)
+    .eq('user_id', user.id)
     .order('is_default', { ascending: false });
 
   return (
