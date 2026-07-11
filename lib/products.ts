@@ -27,7 +27,7 @@ export const PRODUCTS: Record<ProductId, Product> = {
     scent: 'Damask rose · pink Himalayan salt · soft amber steam',
     description:
       'Pure Epsom salt folded with pink Himalayan crystals and real rose petals. The water turns warm and blushing, the air fills with damask rose, and twenty minutes disappear.',
-    price: 349,
+    price: 279,
     mrp: 499,
     weight: '400 g',
     cutout: '/images/cutouts/rose-magic.png',
@@ -54,7 +54,7 @@ export const PRODUCTS: Record<ProductId, Product> = {
     scent: 'French lavender buds · sea salt · midnight calm',
     description:
       'Pure Epsom salt scented with French lavender and scattered with real buds. The evening slows down, shoulders drop, and sleep comes easier.',
-    price: 349,
+    price: 279,
     mrp: 499,
     weight: '400 g',
     cutout: '/images/cutouts/lavender-bliss.png',
