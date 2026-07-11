@@ -51,19 +51,35 @@ describe('checkout address validation', () => {
   it.each([
     { pinCode: '12345' },
     { pinCode: 'abcdef' },
+    { pinCode: '1234567' },
     { email: 'not-an-email' },
     { phone: '123' },
+    { phone: '12345678901234' },
     { phone: '+37126654986' },
+    { phone: '5123456789' },
     { state: 'Riga' },
     { country: 'LV' },
     { pinCode: '012345' },
     { fullName: ' ' },
+    { fullName: 'A' },
     { address: '<script>alert(1)</script>'.repeat(20) },
+    { state: ['Telangana'] as unknown as string },
+    { city: { toString: () => 'Hyderabad' } as unknown as string },
+    { phone: ['9876543210'] as unknown as string },
+    { pinCode: 500001 as unknown as string },
   ])('rejects invalid address input: %j', (change) => {
     expect(addressSchema.safeParse({ ...valid, ...change }).success).toBe(false);
   });
 
-  it('normalizes an Indian mobile number before it is stored', () => {
-    expect(addressSchema.parse({ ...valid, phone: '9876543210' }).phone).toBe('+919876543210');
+  it.each([
+    ['9876543210', '+919876543210'],
+    ['+91 9876543210', '+919876543210'],
+    ['+919876543210', '+919876543210'],
+    ['919876543210', '+919876543210'],
+    ['98765-43210', '+919876543210'],
+  ])('accepts and normalizes a valid Indian mobile %s -> %s', (input, expected) => {
+    const parsed = addressSchema.safeParse({ ...valid, phone: input });
+    expect(parsed.success).toBe(true);
+    if (parsed.success) expect(parsed.data.phone).toBe(expected);
   });
 });
