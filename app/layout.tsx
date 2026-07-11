@@ -3,7 +3,6 @@ import { Fraunces, Inter } from 'next/font/google';
 import './globals.css';
 import { CartProvider } from '@/lib/cart';
 import SmoothScroll from '@/components/experience/SmoothScroll';
-import CustomCursor from '@/components/experience/CustomCursor';
 import LuxuryNavigation from '@/components/experience/LuxuryNavigation';
 import CartDrawer from '@/components/experience/CartDrawer';
 import { AuthProvider } from '@/lib/auth-context';
@@ -52,7 +51,6 @@ export default function RootLayout({
               {children}
               <CartDrawer />
             </SmoothScroll>
-            <CustomCursor />
           </CartProvider>
         </AuthProvider>
       </body>

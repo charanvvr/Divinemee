@@ -34,14 +34,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Custom cursor active state */
-body.cursor-active,
-body.cursor-active a,
-body.cursor-active button,
-body.cursor-active [data-cursor] {
-  cursor: none !important;
-}
-
 ::selection {
   background: rgba(176, 133, 56, 0.22);
 }
