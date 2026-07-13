@@ -45,7 +45,10 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(false);
   const submitting = useRef(false);
   const idempotencyKey = useRef<string | null>(null);
-  const shipping = total >= 399 || total === 0 ? 0 : 49;
+  // Hidden test items (the ₹1 payment-test product) ship free — mirrors the
+  // server-side calculateOrder so the displayed total matches the actual charge.
+  const allHidden = items.length > 0 && items.every((item) => PRODUCTS[item.id]?.hidden);
+  const shipping = total >= 399 || total === 0 || allHidden ? 0 : 49;
 
   async function placeOrder(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

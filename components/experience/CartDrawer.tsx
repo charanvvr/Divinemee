@@ -9,7 +9,8 @@ import { PRODUCTS, useCart } from '@/lib/cart';
 /** Light glass cart drawer with spring physics. */
 export default function CartDrawer() {
   const { items, total, isOpen, close, setQty, remove } = useCart();
-  const freeShipping = total >= 399 || total === 0;
+  const allHidden = items.length > 0 && items.every((item) => PRODUCTS[item.id]?.hidden);
+  const freeShipping = total >= 399 || total === 0 || allHidden;
   const drawerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
