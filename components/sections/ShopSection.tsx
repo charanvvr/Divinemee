@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 import Image from 'next/image';
-import { PRODUCTS, useCart, type ProductId } from '@/lib/cart';
+import { PRODUCTS, VISIBLE_PRODUCT_IDS, useCart, type ProductId } from '@/lib/cart';
 import ProductTilt from '@/components/experience/ProductTilt';
 import ImageReveal from '@/components/media/ImageReveal';
 import { flyToBag } from '@/lib/flyToBag';
@@ -55,7 +55,7 @@ export default function ShopSection() {
 
             {/* variant selector */}
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
-              {(Object.keys(PRODUCTS) as ProductId[]).map((id) => {
+              {(VISIBLE_PRODUCT_IDS as ProductId[]).map((id) => {
                 const prod = PRODUCTS[id];
                 const isActive = active === id;
                 return (

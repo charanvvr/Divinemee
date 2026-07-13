@@ -12,10 +12,17 @@ import {
 } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { createClient } from '@/lib/supabase/client';
-import { PRODUCTS, PRODUCT_LIST, type Product, type ProductId } from '@/lib/products';
+import {
+  PRODUCTS,
+  PRODUCT_LIST,
+  VISIBLE_PRODUCTS,
+  VISIBLE_PRODUCT_IDS,
+  type Product,
+  type ProductId,
+} from '@/lib/products';
 
 // Single source of truth for the catalog lives in lib/products.ts.
-export { PRODUCTS, PRODUCT_LIST };
+export { PRODUCTS, PRODUCT_LIST, VISIBLE_PRODUCTS, VISIBLE_PRODUCT_IDS };
 export type { Product, ProductId };
 
 interface CartItem {

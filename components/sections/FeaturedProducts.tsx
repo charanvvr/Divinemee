@@ -4,11 +4,11 @@ import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
-import { PRODUCTS, type ProductId, useCart } from '@/lib/cart';
+import { PRODUCTS, VISIBLE_PRODUCT_IDS, type ProductId, useCart } from '@/lib/cart';
 import ImageReveal from '@/components/media/ImageReveal';
 import { flyToBag } from '@/lib/flyToBag';
 
-const PRODUCT_IDS = Object.keys(PRODUCTS) as ProductId[];
+const PRODUCT_IDS = VISIBLE_PRODUCT_IDS as ProductId[];
 
 export default function FeaturedProducts() {
   const { add, open } = useCart();

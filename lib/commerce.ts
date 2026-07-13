@@ -5,7 +5,7 @@ import { INDIAN_STATES, isIndianMobile, isIndianPin, normalizeIndianMobile } fro
 export const cartItemsSchema = z
   .array(
     z.object({
-      id: z.enum(['rose-magic', 'lavender-bliss']),
+      id: z.enum(['rose-magic', 'lavender-bliss', 'test-1rupee']),
       qty: z.number().int().min(1).max(20),
     })
   )
@@ -35,7 +35,9 @@ export function calculateOrder(items: z.infer<typeof cartItemsSchema>) {
     };
   });
   const subtotal = normalized.reduce((sum, item) => sum + item.total, 0);
-  const shipping = subtotal >= 399 ? 0 : 49;
+  // Hidden test items (the ₹1 payment-test product) ship free so the charge is exactly ₹1.
+  const allHidden = items.every((item) => PRODUCTS[item.id as ProductId].hidden);
+  const shipping = subtotal >= 399 || allHidden ? 0 : 49;
   return { items: normalized, subtotal, shipping, total: subtotal + shipping };
 }
 

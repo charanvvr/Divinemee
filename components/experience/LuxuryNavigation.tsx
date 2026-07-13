@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useCart, PRODUCT_LIST } from '@/lib/cart';
+import { useCart, VISIBLE_PRODUCTS } from '@/lib/cart';
 
 const LINKS = [
   { label: 'Shop', href: '/#shop' },
@@ -225,7 +225,7 @@ export default function LuxuryNavigation() {
             THE COLLECTION
           </p>
           <div className="mt-4 space-y-2">
-            {PRODUCT_LIST.map((p) => (
+            {VISIBLE_PRODUCTS.map((p) => (
               <Link
                 key={p.id}
                 href={`/products/${p.id}`}

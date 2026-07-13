@@ -1,4 +1,4 @@
-export type ProductId = 'rose-magic' | 'lavender-bliss';
+export type ProductId = 'rose-magic' | 'lavender-bliss' | 'test-1rupee';
 
 export interface Product {
   id: ProductId;
@@ -15,6 +15,10 @@ export interface Product {
   accentSoft: string;
   benefits: string[];
   howTo: string;
+  /** Hidden products are never shown in public listings, search or the sitemap.
+   *  They remain reachable by direct URL and resolvable by the cart/checkout so
+   *  the owner can run a live payment test without exposing it to customers. */
+  hidden?: boolean;
 }
 
 export const PRODUCTS: Record<ProductId, Product> = {
@@ -67,6 +71,31 @@ export const PRODUCTS: Record<ProductId, Product> = {
     howTo:
       'Pour 2–3 tablespoons into a warm bath or foot soak. Let the crystals dissolve fully, then soak for 15–20 minutes. Exhale.',
   },
+  // TEMPORARY: hidden ₹1 item used only to verify the live payment gateway.
+  // Not shown in any public listing, search or sitemap; reachable only at
+  // /products/test-1rupee. Remove this (and its products-table row) after the
+  // live payment test is complete.
+  'test-1rupee': {
+    id: 'test-1rupee',
+    name: 'Payment Test (₹1)',
+    tagline: 'Internal live-payment test — not a real product',
+    scent: 'Test item',
+    description:
+      'Internal ₹1 item used only to confirm the live payment gateway works. This is not for sale and is not shown anywhere on the store.',
+    price: 1,
+    mrp: 1,
+    weight: 'n/a',
+    cutout: '/images/cutouts/lavender-bliss.png',
+    gallery: [{ src: '/images/jar-lavender-open.jpg', alt: 'Payment test item' }],
+    accent: '#8a72c0',
+    accentSoft: '#ece7f6',
+    benefits: ['Live payment verification'],
+    howTo: 'This item exists only to verify the payment gateway and will be removed.',
+    hidden: true,
+  },
 };
 
 export const PRODUCT_LIST = Object.values(PRODUCTS);
+/** Public-facing catalog — excludes hidden items (e.g. the payment-test product). */
+export const VISIBLE_PRODUCTS = PRODUCT_LIST.filter((product) => !product.hidden);
+export const VISIBLE_PRODUCT_IDS = VISIBLE_PRODUCTS.map((product) => product.id);

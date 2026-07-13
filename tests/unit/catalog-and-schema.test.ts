@@ -1,15 +1,22 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { PRODUCT_LIST } from '@/lib/products';
+import { PRODUCT_LIST, VISIBLE_PRODUCTS } from '@/lib/products';
 
 describe('production catalog', () => {
-  it('contains exactly the two ₹279 Epsom salt products', () => {
-    expect(PRODUCT_LIST).toHaveLength(2);
-    expect(PRODUCT_LIST.map(({ id, name, price, weight }) => ({ id, name, price, weight }))).toEqual([
+  it('shows customers exactly the two ₹279 Epsom salt products', () => {
+    expect(VISIBLE_PRODUCTS).toHaveLength(2);
+    expect(VISIBLE_PRODUCTS.map(({ id, name, price, weight }) => ({ id, name, price, weight }))).toEqual([
       { id: 'rose-magic', name: 'Rose Epsom Salt', price: 279, weight: '400 g' },
       { id: 'lavender-bliss', name: 'Lavender Epsom Salt', price: 279, weight: '400 g' },
     ]);
+  });
+
+  it('keeps any non-public item hidden and priced as a ₹1 test only', () => {
+    for (const product of PRODUCT_LIST.filter((item) => item.hidden)) {
+      expect(product.price).toBe(1);
+      expect(VISIBLE_PRODUCTS).not.toContainEqual(product);
+    }
   });
 
   it('uses existing primary and gallery assets', () => {

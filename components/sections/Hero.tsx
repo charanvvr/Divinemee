@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import NextImage from 'next/image';
 import { gsap } from '@/lib/gsap';
-import { PRODUCTS, type ProductId, useCart } from '@/lib/cart';
+import { PRODUCTS, VISIBLE_PRODUCT_IDS, type ProductId, useCart } from '@/lib/cart';
 import { flyToBag } from '@/lib/flyToBag';
 
 // Frame counts must match scripts/generate-hero-frames.mjs
@@ -369,7 +369,7 @@ export default function Hero() {
                   {product.tagline}
                 </p>
                 <div className="mt-3 flex gap-2">
-                  {(Object.keys(PRODUCTS) as ProductId[]).map((id) => (
+                  {(VISIBLE_PRODUCT_IDS as ProductId[]).map((id) => (
                     <button
                       key={id}
                       onClick={() => setSelectedProduct(id)}
