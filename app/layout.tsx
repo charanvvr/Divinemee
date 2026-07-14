@@ -7,6 +7,7 @@ import LuxuryNavigation from '@/components/experience/LuxuryNavigation';
 import CartDrawer from '@/components/experience/CartDrawer';
 import { AuthProvider } from '@/lib/auth-context';
 import AmbientSound from '@/components/experience/AmbientSound';
+import { Analytics } from '@vercel/analytics/next';
 
 const fraunces = Fraunces({
   subsets: ['latin'],
@@ -63,6 +64,7 @@ export default function RootLayout({
             </SmoothScroll>
           </CartProvider>
         </AuthProvider>
+        <Analytics />
       </body>
     </html>
   );
