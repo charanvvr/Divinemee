@@ -2,17 +2,21 @@ import { describe, expect, it } from 'vitest';
 import { addressSchema, calculateOrder, cartItemsSchema } from '@/lib/commerce';
 
 describe('trusted order calculation', () => {
-  it('uses the server catalog price and converts two products to free shipping', () => {
+  it('uses the server catalog price and gives free shipping over ₹399', () => {
     const result = calculateOrder([
       { id: 'rose-magic', qty: 1 },
       { id: 'lavender-bliss', qty: 1 },
     ]);
-    expect(result).toMatchObject({ subtotal: 558, shipping: 0, total: 558 });
-    expect(result.items.map((item) => item.price)).toEqual([279, 279]);
+    expect(result).toMatchObject({ subtotal: 698, shipping: 0, total: 698 });
+    expect(result.items.map((item) => item.price)).toEqual([349, 349]);
+  });
+
+  it('prices the Epsom salt at ₹279', () => {
+    expect(calculateOrder([{ id: 'epsom-salt', qty: 1 }]).subtotal).toBe(279);
   });
 
   it('charges ₹49 shipping below ₹399', () => {
-    expect(calculateOrder([{ id: 'rose-magic', qty: 1 }]).total).toBe(328);
+    expect(calculateOrder([{ id: 'rose-magic', qty: 1 }]).total).toBe(398);
   });
 
   it.each([
@@ -28,7 +32,7 @@ describe('trusted order calculation', () => {
 
   it('ignores a client-supplied price field', () => {
     const parsed = cartItemsSchema.parse([{ id: 'rose-magic', qty: 1, price: 1 }]);
-    expect(calculateOrder(parsed).total).toBe(328);
+    expect(calculateOrder(parsed).total).toBe(398);
   });
 });
 

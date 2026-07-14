@@ -4,17 +4,17 @@ import { describe, expect, it } from 'vitest';
 import { PRODUCT_LIST, VISIBLE_PRODUCTS } from '@/lib/products';
 
 describe('production catalog', () => {
-  it('shows customers exactly the two ₹279 Epsom salt products', () => {
-    expect(VISIBLE_PRODUCTS).toHaveLength(2);
+  it('shows customers exactly the three published products', () => {
+    expect(VISIBLE_PRODUCTS).toHaveLength(3);
     expect(VISIBLE_PRODUCTS.map(({ id, name, price, weight }) => ({ id, name, price, weight }))).toEqual([
-      { id: 'rose-magic', name: 'Rose Epsom Salt', price: 279, weight: '400 g' },
-      { id: 'lavender-bliss', name: 'Lavender Epsom Salt', price: 279, weight: '400 g' },
+      { id: 'rose-magic', name: 'Rose Bath Salt', price: 349, weight: '400 g' },
+      { id: 'lavender-bliss', name: 'Lavender Bath Salt', price: 349, weight: '400 g' },
+      { id: 'epsom-salt', name: 'Epsom Salt', price: 279, weight: '1 kg' },
     ]);
   });
 
-  it('keeps any non-public item hidden and priced as a ₹1 test only', () => {
+  it('never exposes a hidden item in the public catalog', () => {
     for (const product of PRODUCT_LIST.filter((item) => item.hidden)) {
-      expect(product.price).toBe(1);
       expect(VISIBLE_PRODUCTS).not.toContainEqual(product);
     }
   });

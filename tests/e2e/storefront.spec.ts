@@ -34,7 +34,7 @@ test('guest cart supports add, quantity, remove and checkout navigation', async 
 
   const cart = page.getByRole('dialog', { name: 'Shopping cart' });
   await expect(cart).toBeVisible();
-  await expect(cart.getByText('Lavender Epsom Salt', { exact: true })).toBeVisible();
+  await expect(cart.getByText('Lavender Bath Salt', { exact: true })).toBeVisible();
   await cart.getByRole('button', { name: 'Increase' }).click();
   await expect(cart.getByText('2', { exact: true })).toBeVisible();
   await cart.getByRole('button', { name: 'Decrease' }).click();
@@ -69,13 +69,13 @@ test('authentication forms are labelled and protected routes redirect safely', a
 
 test('product metadata, robots, sitemap and invalid routes are correct', async ({ page, request }) => {
   await page.goto('/products/rose-magic', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('heading', { level: 1, name: 'Rose Epsom Salt' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'Rose Bath Salt' })).toBeVisible();
   const productJson = await page.locator('script[type="application/ld+json"]').textContent();
   expect(productJson).toBeTruthy();
   expect(JSON.parse(productJson || '{}')).toMatchObject({
     '@type': 'Product',
-    name: 'Rose Epsom Salt',
-    offers: { price: 279, priceCurrency: 'INR' },
+    name: 'Rose Bath Salt',
+    offers: { price: 349, priceCurrency: 'INR' },
   });
 
   expect((await request.get('/robots.txt')).status()).toBe(200);

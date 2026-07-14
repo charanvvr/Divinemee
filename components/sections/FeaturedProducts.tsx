@@ -34,11 +34,11 @@ export default function FeaturedProducts() {
               className="font-display font-light leading-tight text-ink"
               style={{ fontSize: 'clamp(2rem, 4vw, 3.4rem)' }}
             >
-              Two rituals. <em className="italic text-gold">One promise.</em>
+              Three rituals. <em className="italic text-gold">One promise.</em>
             </h2>
             <p className="max-w-sm text-[14px] font-light leading-relaxed text-ink-faint">
-              Pure Epsom salt, two moods — rose warmth or lavender stillness.
-              Every detail responds to the ritual you choose.
+              Rose and lavender bath salts, and pure Epsom salt. Every detail
+              responds to the ritual you choose.
             </p>
           </div>
         </ImageReveal>

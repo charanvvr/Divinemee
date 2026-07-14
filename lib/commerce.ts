@@ -5,7 +5,7 @@ import { INDIAN_STATES, isIndianMobile, isIndianPin, normalizeIndianMobile } fro
 export const cartItemsSchema = z
   .array(
     z.object({
-      id: z.enum(['rose-magic', 'lavender-bliss', 'test-1rupee']),
+      id: z.enum(['rose-magic', 'lavender-bliss', 'epsom-salt']),
       qty: z.number().int().min(1).max(20),
     })
   )

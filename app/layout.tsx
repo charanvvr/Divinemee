@@ -21,22 +21,22 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://www.divinemee.com'),
-  title: 'Divine Mee Epsom Salt — Rose & Lavender Bath Soaks',
+  title: 'Divine Mee — Rose, Lavender & Epsom Bath Salts',
   description:
-    'Divine Mee Epsom salt bath soaks in Rose and Lavender — handcrafted self-care rituals with pure Epsom salt, pink Himalayan salt and essential oils.',
+    'Divine Mee handcrafted self-care rituals — Rose and Lavender luxury bath salts and pure Epsom salt bath soak, with pink Himalayan salt and real botanicals.',
   openGraph: {
     type: 'website',
     url: '/',
-    title: 'Divine Mee Epsom Salt — Self Care Ritual',
-    description: 'Rose & Lavender Epsom salt bath soaks. A daily luxury escape.',
+    title: 'Divine Mee — Self Care Ritual',
+    description: 'Rose & Lavender bath salts and pure Epsom salt. A daily luxury escape.',
     images: ['/images/jar-pair.jpg'],
   },
   alternates: { canonical: '/' },
   icons: { icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }] },
   twitter: {
     card: 'summary_large_image',
-    title: 'Divine Mee Epsom Salt — Self Care Ritual',
-    description: 'Rose & Lavender Epsom salt bath soaks. A daily luxury escape.',
+    title: 'Divine Mee — Self Care Ritual',
+    description: 'Rose & Lavender bath salts and pure Epsom salt. A daily luxury escape.',
     images: ['/images/jar-pair.jpg'],
   },
 };

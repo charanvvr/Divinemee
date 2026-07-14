@@ -254,7 +254,7 @@ export default function Hero() {
       <section id="top" className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-ivory">
         <NextImage
           src="/images/jars-candlelight.jpg"
-          alt="Lavender and Rose Epsom Salt bath soaks by candlelight"
+          alt="Divine Mee Rose and Lavender bath salts by candlelight"
           fill
           priority
           className="object-cover opacity-90"
@@ -267,20 +267,26 @@ export default function Hero() {
             Pour. Dissolve. <em className="italic text-gold">Exhale.</em>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-[15px] font-light leading-relaxed text-ink-soft">
-            Two moods. One ritual. Pure Epsom salt, real botanicals and twenty quiet minutes that belong only to you.
+            Three rituals. One promise. Rose and lavender bath salts, pure Epsom salt, and twenty quiet minutes that belong only to you.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link
-              href="/products/lavender-bliss"
-              className="rounded-full border border-ink/15 bg-paper/80 px-8 py-4 text-[10px] font-semibold tracking-[0.18em] text-ink transition-colors hover:bg-lavender-soft"
+              href="/products/rose-magic"
+              className="rounded-full bg-ink px-6 py-4 text-[10px] font-semibold tracking-[0.18em] text-ivory transition-colors hover:bg-rose-deep"
             >
-              LAVENDER EPSOM SALT
+              ROSE BATH SALT
             </Link>
             <Link
-              href="/products/rose-magic"
-              className="rounded-full bg-ink px-8 py-4 text-[10px] font-semibold tracking-[0.18em] text-ivory transition-colors hover:bg-rose-deep"
+              href="/products/lavender-bliss"
+              className="rounded-full border border-ink/15 bg-paper/80 px-6 py-4 text-[10px] font-semibold tracking-[0.18em] text-ink transition-colors hover:bg-lavender-soft"
             >
-              ROSE EPSOM SALT
+              LAVENDER BATH SALT
+            </Link>
+            <Link
+              href="/products/epsom-salt"
+              className="rounded-full border border-ink/15 bg-paper/80 px-6 py-4 text-[10px] font-semibold tracking-[0.18em] text-ink transition-colors hover:bg-lavender-soft"
+            >
+              EPSOM SALT
             </Link>
           </div>
         </div>
@@ -412,20 +418,26 @@ export default function Hero() {
           <div className="w-full max-w-lg rounded-[2rem] border border-white/55 bg-paper/80 p-6 text-center shadow-lift backdrop-blur-xl md:p-8">
             <p className="text-[9px] font-semibold tracking-[0.34em] text-gold">THE DIVINE MEE COLLECTION</p>
             <h2 className="mt-3 font-display text-3xl font-light text-ink md:text-4xl">
-              Two moods. <em className="italic text-gold">One ritual.</em>
+              Three rituals. <em className="italic text-gold">One promise.</em>
             </h2>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/products/lavender-bliss"
-                className="flex min-h-[48px] flex-1 items-center justify-center rounded-full border border-ink/15 bg-paper/70 px-5 text-[10px] font-semibold tracking-[0.16em] text-ink transition-colors hover:bg-lavender-soft"
-              >
-                LAVENDER EPSOM SALT
-              </Link>
+            <div className="mt-6 flex flex-col gap-2.5 sm:flex-row">
               <Link
                 href="/products/rose-magic"
-                className="flex min-h-[48px] flex-1 items-center justify-center rounded-full bg-ink px-5 text-[10px] font-semibold tracking-[0.16em] text-ivory transition-colors hover:bg-rose-deep"
+                className="flex min-h-[48px] flex-1 items-center justify-center rounded-full bg-ink px-4 text-[10px] font-semibold tracking-[0.14em] text-ivory transition-colors hover:bg-rose-deep"
               >
-                ROSE EPSOM SALT
+                ROSE
+              </Link>
+              <Link
+                href="/products/lavender-bliss"
+                className="flex min-h-[48px] flex-1 items-center justify-center rounded-full border border-ink/15 bg-paper/70 px-4 text-[10px] font-semibold tracking-[0.14em] text-ink transition-colors hover:bg-lavender-soft"
+              >
+                LAVENDER
+              </Link>
+              <Link
+                href="/products/epsom-salt"
+                className="flex min-h-[48px] flex-1 items-center justify-center rounded-full border border-ink/15 bg-paper/70 px-4 text-[10px] font-semibold tracking-[0.14em] text-ink transition-colors hover:bg-lavender-soft"
+              >
+                EPSOM
               </Link>
             </div>
           </div>
